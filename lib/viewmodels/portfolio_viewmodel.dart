@@ -78,12 +78,15 @@ class PortfolioViewModel extends ChangeNotifier {
     }
 
     if (targetKey.currentContext != null) {
-      Scrollable.ensureVisible(
-        targetKey.currentContext!,
+      final RenderBox box = targetKey.currentContext!.findRenderObject() as RenderBox;
+      // Get the absolute offset by adding the current scroll position to the local-to-global dy.
+      // Subtract about 80 pixels to account for the sticky header height.
+      final targetOffset = scrollController.offset + box.localToGlobal(Offset.zero).dy - 80;
+
+      scrollController.animateTo(
+        targetOffset.clamp(0.0, scrollController.position.maxScrollExtent),
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeInOut,
-        alignment: 0.05, // Slightly offset from the very top to account for header
-        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
       );
     }
   }
