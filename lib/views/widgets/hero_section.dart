@@ -9,14 +9,19 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final isMobile = ResponsiveLayout.isMobile(context);
     final height = isMobile ? null : MediaQuery.of(context).size.height;
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF1C1C1C) : const Color(0xFF232323);
+
     return Container(
       // Using the exact dark background color from the image mockup
-      color: const Color(0xFF1C1C1C), 
+      color: bgColor,
       width: double.infinity,
-      height: height! * 0.84,
+      height: 800,
       child: isMobile
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 80),
