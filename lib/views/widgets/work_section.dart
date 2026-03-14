@@ -52,13 +52,15 @@ class _WorkSectionState extends State<WorkSection> {
     final isDark = theme.brightness == Brightness.dark;
     
     // Background color mimicking the image for dark mode, adapting for light mode
-    final bgColor = isDark ? const Color(0xFF0A0F1B) : theme.colorScheme.surface;
+    final bgColor = isDark ? const Color(0xFF000000) : theme.colorScheme.surface;
     final accentTeal = isDark ? const Color(0xFF4AC2B7) : theme.primaryColor;
     final textWhite = theme.colorScheme.onSurface;
     final textGray = isDark ? const Color(0xFF8B949E) : theme.colorScheme.onSurface.withValues(alpha: 0.6);
 
     return Container(
-      color: bgColor,
+      color: theme.brightness == Brightness.light
+          ? Colors.grey.shade50
+          : theme.scaffoldBackgroundColor,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 24.0 : 80.0,
         vertical: 80.0,

@@ -14,134 +14,101 @@ class HeaderSliver extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF1C1C1C),
       title: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: ResponsiveLayout.isMobile(context) ? 0.0 : 40.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Logo
-            Text(
-              UserData.name.split(' ')[0], // "Uttam"
-              style: GoogleFonts.caveat(
-                textStyle: Theme.of(context).textTheme.headlineLarge,
-                fontWeight: FontWeight.bold,
-                fontSize: 36,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
+           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           children: [
+             // Logo
+             Text(
+               UserData.name.split(' ')[0], // "Uttam"
+               style: GoogleFonts.caveat(
+                 textStyle: Theme.of(context).textTheme.headlineLarge,
+                 fontWeight: FontWeight.bold,
+                 fontSize: 36,
+                 color: Colors.white,
+               ),
+             ),
 
-            // Navigation Links
-            if (!ResponsiveLayout.isMobile(context))
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildNavText(context, 'HOME'),
-                    const SizedBox(width: 30),
-                    _buildNavText(context, 'WORKS'),
-                    const SizedBox(width: 30),
-                    _buildNavText(context, 'SKILLS'),
-                    const SizedBox(width: 30),
-                    _buildNavText(context, 'EXPERIENCE'),
-                    const SizedBox(width: 30),
-                    _buildNavText(context, 'EDUCATION'),
-                  ],
-                ),
-              ),
+             // Navigation Links
+             if (!ResponsiveLayout.isMobile(context))
+               Expanded(
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     _buildNavText(context, 'HOME', 'Home'),
+                     const SizedBox(width: 30),
+                     _buildNavText(context, 'WORKS', 'Resume'),
+                     const SizedBox(width: 30),
+                     _buildNavText(context, 'SKILLS', 'Portfolio'),
+                     const SizedBox(width: 30),
+                     _buildNavText(context, 'EXPERIENCE', 'Blog'),
+                     const SizedBox(width: 30),
+                     _buildNavText(context, 'EDUCATION', 'Contact'),
+                   ],
+                 ),
+               ),
 
-            // Phone & Action
-            if (!ResponsiveLayout.isMobile(context))
-              Row(
-                children: [
-                   Text(
-                    UserData.phone,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                  ),
-                  const SizedBox(width: 16),
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.surface,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        )
-                      ],
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.phone_in_talk_outlined,
-                        color: Theme.of(context).primaryColor,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  // Dark mode toggle inside header for convenience
-                  Consumer<ThemeProvider>(
-                    builder: (context, themeProvider, child) {
-                      final isDark = Theme.of(context).brightness == Brightness.dark;
-                      return IconButton(
-                        icon: Icon(
-                          isDark ? Icons.light_mode : Icons.dark_mode,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        onPressed: () => themeProvider.toggleTheme(!isDark),
-                      );
-                    },
-                  ),
-                ],
-              )
-            else
-              IconButton(
-                icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurface),
-                onPressed: () {},
-              )
-          ],
+             if (ResponsiveLayout.isMobile(context))
+               IconButton(
+                 icon: const Icon(Icons.menu, color: Colors.white),
+                 onPressed: () {},
+               )
+             else
+               // Keeping dark mode toggle just in case the user wants it, but blending it in
+               Consumer<ThemeProvider>(
+                 builder: (context, themeProvider, child) {
+                   final isDark = Theme.of(context).brightness == Brightness.dark;
+                   return IconButton(
+                     icon: Icon(
+                       isDark ? Icons.light_mode : Icons.dark_mode,
+                       color: Colors.white70,
+                       size: 20,
+                     ),
+                     onPressed: () => themeProvider.toggleTheme(!isDark),
+                   );
+                 },
+               ),
+           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavText(BuildContext context, String title) {
+  Widget _buildNavText(BuildContext context, String sectionKey, String displayText) {
     return Consumer<PortfolioViewModel>(
       builder: (context, viewModel, child) {
-        final isActive = viewModel.activeSection == title;
+        final isActive = viewModel.activeSection == sectionKey;
         return InkWell(
-          onTap: () => viewModel.scrollToSectionByTitle(title),
+          onTap: () => viewModel.scrollToSectionByTitle(sectionKey),
           hoverColor: Colors.transparent,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: isActive ? Theme.of(context).primaryColor : Colors.transparent,
-                  width: 2.0,
-                ),
-              ),
-            ),
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: isActive
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).colorScheme.onSurface,
-                    fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
-                    letterSpacing: 1.0,
-                  ),
-            ),
+             duration: const Duration(milliseconds: 300),
+             padding: const EdgeInsets.symmetric(vertical: 4),
+             child: Row(
+               children: [
+                 Text(
+                   displayText,
+                   style: GoogleFonts.poppins(
+                     color: isActive ? Colors.white : Colors.white70,
+                     fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                     fontSize: 14,
+                   ),
+                 ),
+                 if (displayText == 'Home') ...[
+                   const SizedBox(width: 4),
+                   Icon(
+                     Icons.keyboard_arrow_down,
+                     color: isActive ? Colors.white : Colors.white70,
+                     size: 16,
+                   ),
+                 ]
+               ],
+             ),
           ),
         );
       },

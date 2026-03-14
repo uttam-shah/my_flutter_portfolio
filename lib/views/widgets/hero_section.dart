@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_portfolio/core/constants/user_data.dart';
-import 'package:my_flutter_portfolio/core/theme/app_colors.dart';
 import 'package:my_flutter_portfolio/core/utils/responsive_layout.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -10,227 +10,192 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveLayout.isMobile(context);
-    final height = MediaQuery.of(context).size.height;
+    final height = isMobile ? null : MediaQuery.of(context).size.height;
 
-    // If mobile, we stack vertically
-    if (isMobile) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-        child: Column(
-          children: [
-             _buildLeftContent(context),
-             const SizedBox(height: 40),
-             _buildCenterImagePlaceholder(context),
-             const SizedBox(height: 40),
-             _buildRightContent(context),
-          ],
-        ),
-      );
-    }
-
-    // Desktop/Tablet Layout Stack
-    return SizedBox(
-      height: height,
+    return Container(
+      // Using the exact dark background color from the image mockup
+      color: const Color(0xFF1C1C1C), 
       width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Background Brush shape + User Image
-          _buildCenterImagePlaceholder(context),
-          
-          // Foreground Content
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80.0, vertical: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+      height: height! * 0.84,
+      child: isMobile
+          ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 80),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: _buildLeftContent(context)
-                    )
-                  ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: _buildRightContent(context)
-                    )
-                  ),
+                  _buildLeftContent(context, isMobile: true),
+                  const SizedBox(height: 60),
+                  _buildImageContent(context, isMobile: true),
                 ],
               ),
+            )
+          : Stack(
+              children: [
+                // Right side image (absolutely positioned)
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  top: 0,
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: _buildImageContent(context, isMobile: false),
+                ),
+                
+                // Left side textual content
+                Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 80.0, right: 40.0, top: 120, bottom: 40),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: _buildLeftContent(context, isMobile: false),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
-  Widget _buildCenterImagePlaceholder(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        // Brush Placeholder (Abstract rotated container)
-        // Transform.rotate(
-        //   angle: -0.2, // Slight tilt
-        //   child: Container(
-        //     width: 450,
-        //     height: 550,
-        //     decoration: BoxDecoration(
-        //       color: theme.primaryColor,
-        //       borderRadius: BorderRadius.circular(100),
-        //     ),
-        //   ),
-        // ),
-        // User Image Placeholder
-        Align(
-          alignment: Alignment.bottomCenter,
-          // child: Container(
-          //   width: 350,
-          //   height: 500,
-          //   decoration: BoxDecoration(
-          //     color: AppColors.accentYellow.withValues(alpha: 0.9),
-          //     borderRadius: const BorderRadius.only(
-          //       topLeft: Radius.circular(30),
-          //       topRight: Radius.circular(30),
-          //     ),
-          //   ),
-          //   child: Center(
-          //     child: Image.asset('assets/images/uttam_image.png', fit: BoxFit.cover),
-          //     // child: Text(
-          //     //   "Your Image Here\n(Add transparent PNG)",
-          //     //   textAlign: TextAlign.center,
-          //     //   style: theme.textTheme.titleMedium?.copyWith(
-          //     //     color: Colors.black54,
-          //     //     fontWeight: FontWeight.bold,
-          //     //   ),
-          //     // ),
-          //   ),
-          // ),
-          child: Center(
-            child: Image.asset('assets/images/uttam_image.png', fit: BoxFit.cover),
-            // child: Text(
-            //   "Your Image Here\n(Add transparent PNG)",
-            //   textAlign: TextAlign.center,
-            //   style: theme.textTheme.titleMedium?.copyWith(
-            //     color: Colors.black54,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLeftContent(BuildContext context) {
-    final theme = Theme.of(context);
-    final isMobile = ResponsiveLayout.isMobile(context);
+  Widget _buildLeftContent(BuildContext context, {required bool isMobile}) {
+    // Determine the name to show (extracted from UserData or fallback)
+    final name = UserData.name.isNotEmpty ? UserData.name : "Uttam Shah";
 
     return Column(
       crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        if (!isMobile) const SizedBox(height: 40),
         Text(
-          "Hey There,\nI'm ${UserData.name.split(' ')[0]}",
-          style: theme.textTheme.displayLarge?.copyWith(
-            fontWeight: FontWeight.w800,
-            color: theme.colorScheme.onSurface,
-            height: 1.1,
-            fontSize: isMobile ? 48 : 64,
+          "Hi There!",
+          style: GoogleFonts.poppins(
+            fontSize: isMobile ? 24 : 32,
+            fontWeight: FontWeight.w400,
+            color: Colors.white70,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
-        const SizedBox(height: 24),
-        InkWell(
-          onTap: () => launchUrl(Uri.parse('mailto:${UserData.email}')),
-          child: Text(
-            UserData.email,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: AppColors.accentRed, 
-              fontWeight: FontWeight.w600,
-              decoration: TextDecoration.underline,
-              decorationColor: AppColors.accentRed,
+        const SizedBox(height: 8),
+        RichText(
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+          text: TextSpan(
+            style: GoogleFonts.poppins(
+              fontSize: isMobile ? 40 : 64,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+              height: 1.1,
+              letterSpacing: -1,
             ),
-            textAlign: isMobile ? TextAlign.center : TextAlign.left,
+            children: [
+              TextSpan(text: "I am $name\n"),
+              const TextSpan(text: "Flutter Developer"),
+              // The terminal typing cursor effect
+              TextSpan(
+                text: "|",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white54,
+                ),
+              ),
+            ],
           ),
         ),
-        SizedBox(height: isMobile ? 40 : 120),
+        const SizedBox(height: 16),
+        Text(
+          "I make the complex simple.",
+          style: GoogleFonts.poppins(
+            fontSize: isMobile ? 20 : 28,
+            fontWeight: FontWeight.w400,
+            color: Colors.white54,
+          ),
+          textAlign: isMobile ? TextAlign.center : TextAlign.left,
+        ),
+        const SizedBox(height: 48),
+        // Action Button
+        InkWell(
+          onTap: () => launchUrl(Uri.parse('mailto:${UserData.email}')),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1db954), // Green action button from image
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              "Contact Me",
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        
+        if (!isMobile) const Spacer(),
+        if (isMobile) const SizedBox(height: 60),
+        
+        // Bottom details
         Row(
           mainAxisAlignment: isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min, // Keep tight bound
           children: [
-            Text(
-              "1.5+",
-              style: theme.textTheme.displayLarge?.copyWith(
-                fontSize: 64,
-                fontWeight: FontWeight.w900,
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              "YEARS\nEXPERIENCE",
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.2,
-                height: 1.3,
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
+            _buildContactInfoBlock("Email", UserData.email),
+            _buildDivider(),
+            _buildContactInfoBlock("Phone", UserData.phone),
+            _buildDivider(),
+            _buildContactInfoBlock("Location", "New Delhi, India"),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildRightContent(BuildContext context) {
-    final theme = Theme.of(context);
-    final isMobile = ResponsiveLayout.isMobile(context);
+  Widget _buildDivider() {
+    return Container(
+      height: 40,
+      width: 1,
+      color: Colors.white24,
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+    );
+  }
 
+  Widget _buildContactInfoBlock(String title, String value) {
     return Column(
-      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 250,
-          child: Text(
-            "I design beautifully simple\nthings, And I love what i do.",
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.onSurface,
-              height: 1.5,
-            ),
-            textAlign: isMobile ? TextAlign.center : TextAlign.left,
+        Text(
+          title,
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
           ),
         ),
-        SizedBox(height: isMobile ? 40 : 150),
-        Column(
-          crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: theme.colorScheme.onSurface, width: 2),
-              ),
-              child: Center(
-                child: Icon(Icons.park, size: 40, color: theme.colorScheme.onSurface),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "DEV CERTIFIED\nPROFESSIONAL\nUI/UX EXPERT",
-              textAlign: TextAlign.center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1.1,
-              ),
-            ),
-          ],
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: GoogleFonts.poppins(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Colors.white54,
+          ),
         ),
       ],
+    );
+  }
+
+  Widget _buildImageContent(BuildContext context, {required bool isMobile}) {
+    // In desktop, the image spans the right half
+    return Container(
+      width: isMobile ? 300 : double.infinity,
+      height: isMobile ? 400 : double.infinity,
+      decoration: const BoxDecoration(
+        // For accurate representation we need a placeholder or the actual asset
+        // The previous code had "assets/images/uttam_image.png"
+      ),
+      child: Image.asset(
+        'assets/images/uttam_image2.png',
+        fit: isMobile ? BoxFit.contain : BoxFit.cover,
+        alignment: isMobile ? Alignment.center : Alignment.centerLeft,
+      ),
     );
   }
 }
