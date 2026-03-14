@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:my_flutter_portfolio/viewmodels/portfolio_viewmodel.dart';
 import 'package:my_flutter_portfolio/views/widgets/header.dart';
 import 'package:my_flutter_portfolio/views/widgets/hero_section.dart';
-import 'package:my_flutter_portfolio/views/widgets/skills_section.dart';
+import 'package:my_flutter_portfolio/views/widgets/tech_stack/tech_stack_section.dart';
 import 'package:my_flutter_portfolio/views/widgets/work_section.dart';
 import 'package:my_flutter_portfolio/views/widgets/experience_section.dart';
 import 'package:my_flutter_portfolio/views/widgets/education_section.dart';
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
               [
                 HeroSection(key: viewModel.homeKey),
                 WorkSection(key: viewModel.worksKey),
-                SkillsSection(key: viewModel.skillsKey),
+                TechStackSection(key: viewModel.skillsKey),
                 ExperienceSection(key: viewModel.experienceKey),
                 EducationSection(key: viewModel.educationKey),
                 const Footer(),
