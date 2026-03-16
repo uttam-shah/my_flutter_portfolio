@@ -10,7 +10,7 @@ class UserData {
   static const String instagram = "instagram.com/demo_url";
   static const String roleTitle = "Mobile Application Developer";
   static const String summary =
-      "Mobile Application Developer with 1.5+ year of experience building Android and cross-platform apps using Flutter, Kotlin, and Jetpack Compose, with backend development experience in Spring Boot, REST APIs, and Firebase, delivering production-ready applications published on Google Play Store and Apple App Store.";
+      "Mobile Application Developer with 1.5+ years of professional working experience in designing and building scalable mobile applications for Android and cross-platform platforms. Proficient in Flutter, Kotlin, and Jetpack Compose, with hands-on experience developing high-performance, user-centric applications. Experienced in backend development using Spring Boot, RESTful APIs, and Firebase, enabling seamless integration between mobile apps and server-side services. Skilled in building production-ready applications, implementing clean architecture, and optimizing app performance. Successfully contributed to applications published on Google Play Store and Apple App Store, with a strong focus on delivering reliable, maintainable, and high-quality software solutions.";
 
   static List<SkillModel> skills = [
     SkillModel(

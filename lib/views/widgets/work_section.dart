@@ -248,23 +248,18 @@ class _WorkSectionState extends State<WorkSection> {
       ],
     );
 
-    final rightContent = Container(
-      width: double.infinity, // takes available space
-      decoration: BoxDecoration(
-        color: textWhite.withValues(alpha: 0.05), // Placeholder for image
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: textWhite.withValues(alpha: 0.1)),
-      ),
-      child: Center(
-        child: Text(
-          "Image Placeholder\n(Add your project image)",
-          textAlign: TextAlign.center,
-          style: GoogleFonts.inter(
-            color: textGray.withValues(alpha: 0.5),
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
+    final rightContent = Center(
+
+      child: Image.asset('assets/images/computer_screen.png', fit: BoxFit.cover,),
+
+      // child: Text(
+      //   "Image Placeholder\n(Add your project image)",
+      //   textAlign: TextAlign.center,
+      //   style: GoogleFonts.inter(
+      //     color: textGray.withValues(alpha: 0.5),
+      //     fontWeight: FontWeight.w600,
+      //   ),
+      // ),
     );
 
     if (isMobile) {

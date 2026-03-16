@@ -104,7 +104,7 @@ class HeroSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          "I make the complex simple.",
+          "I build high-performance Android & Flutter\napps with clean architecture and great\nuser experience.",
           style: GoogleFonts.poppins(
             fontSize: isMobile ? 20 : 28,
             fontWeight: FontWeight.w400,

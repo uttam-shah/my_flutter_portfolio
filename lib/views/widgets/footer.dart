@@ -404,6 +404,15 @@ class _ContactColumn extends StatelessWidget {
           isLink: true,
           linkUrl: 'https://${UserData.github}',
         ),
+        const SizedBox(height: 10),
+        _ContactRow(
+          icon: FontAwesomeIcons.linkedin,
+          text: UserData.linkedin,
+          color: bodyColor,
+          primary: primary,
+          isLink: true,
+          linkUrl: 'https://${UserData.linkedin}',
+        ),
       ],
     );
   }

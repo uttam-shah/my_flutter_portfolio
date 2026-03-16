@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_portfolio/core/utils/responsive_layout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// ─── Skill Entry ─────────────────────────────────────────────────────────────
 class _SkillEntry {
   final String name;
-  final FaIconData icon;
+  final dynamic icon;
   final Color color;
 
   const _SkillEntry({
@@ -16,27 +17,25 @@ class _SkillEntry {
   });
 }
 
-// ─── Skill Data ──────────────────────────────────────────────────────────────
 final List<_SkillEntry> _skills = [
-  _SkillEntry(name: 'Flutter',        icon: FontAwesomeIcons.mobile,        color: const Color(0xFF54C5F8)),
-  _SkillEntry(name: 'Dart',           icon: FontAwesomeIcons.code,           color: const Color(0xFF00B4AB)),
-  _SkillEntry(name: 'Kotlin',         icon: FontAwesomeIcons.k,              color: const Color(0xFF7F52FF)),
-  _SkillEntry(name: 'Java',           icon: FontAwesomeIcons.java,           color: const Color(0xFFE76F00)),
-  _SkillEntry(name: 'Android',        icon: FontAwesomeIcons.android,        color: const Color(0xFF3DDC84)),
-  _SkillEntry(name: 'Jetpack',        icon: FontAwesomeIcons.layerGroup,     color: const Color(0xFF4285F4)),
-  _SkillEntry(name: 'Spring Boot',    icon: FontAwesomeIcons.leaf,           color: const Color(0xFF6DB33F)),
-  _SkillEntry(name: 'REST APIs',      icon: FontAwesomeIcons.plug,           color: const Color(0xFF00BCD4)),
-  _SkillEntry(name: 'Firebase',       icon: FontAwesomeIcons.fire,           color: const Color(0xFFFFCA28)),
-  _SkillEntry(name: 'MySQL',          icon: FontAwesomeIcons.database,       color: const Color(0xFF4479A1)),
-  _SkillEntry(name: 'SQLite',         icon: FontAwesomeIcons.server,         color: const Color(0xFF7EC8E3)),
-  _SkillEntry(name: 'AWS',            icon: FontAwesomeIcons.aws,            color: const Color(0xFFFF9900)),
-  _SkillEntry(name: 'Git',            icon: FontAwesomeIcons.gitAlt,         color: const Color(0xFFF05032)),
-  _SkillEntry(name: 'BLE / IoT',      icon: FontAwesomeIcons.bluetooth,      color: const Color(0xFF0082FC)),
-  _SkillEntry(name: 'Postman',        icon: FontAwesomeIcons.paperPlane,     color: const Color(0xFFFF6C37)),
-  _SkillEntry(name: 'AI Integration', icon: FontAwesomeIcons.robot,          color: const Color(0xFF5ABCB5)),
+  const _SkillEntry(name: 'Flutter',        icon: FontAwesomeIcons.mobile,        color: Color(0xFF54C5F8)),
+  const _SkillEntry(name: 'Dart',           icon: FontAwesomeIcons.code,           color: Color(0xFF00B4AB)),
+  const _SkillEntry(name: 'Kotlin',         icon: FontAwesomeIcons.k,              color: Color(0xFF7F52FF)),
+  const _SkillEntry(name: 'Java',           icon: FontAwesomeIcons.java,           color: Color(0xFFE76F00)),
+  const _SkillEntry(name: 'Android',        icon: FontAwesomeIcons.android,        color: Color(0xFF3DDC84)),
+  const _SkillEntry(name: 'Jetpack',        icon: FontAwesomeIcons.layerGroup,     color: Color(0xFF4285F4)),
+  const _SkillEntry(name: 'Spring Boot',    icon: FontAwesomeIcons.leaf,           color: Color(0xFF6DB33F)),
+  const _SkillEntry(name: 'REST APIs',      icon: FontAwesomeIcons.plug,           color: Color(0xFF00BCD4)),
+  const _SkillEntry(name: 'Firebase',       icon: FontAwesomeIcons.fire,           color: Color(0xFFFFCA28)),
+  const _SkillEntry(name: 'MySQL',          icon: FontAwesomeIcons.database,       color: Color(0xFF4479A1)),
+  const _SkillEntry(name: 'SQLite',         icon: FontAwesomeIcons.server,         color: Color(0xFF7EC8E3)),
+  const _SkillEntry(name: 'AWS',            icon: FontAwesomeIcons.aws,            color: Color(0xFFFF9900)),
+  const _SkillEntry(name: 'Git',            icon: FontAwesomeIcons.gitAlt,         color: Color(0xFFF05032)),
+  const _SkillEntry(name: 'BLE / IoT',      icon: FontAwesomeIcons.bluetooth,      color: Color(0xFF0082FC)),
+  const _SkillEntry(name: 'Postman',        icon: FontAwesomeIcons.paperPlane,     color: Color(0xFFFF6C37)),
+  const _SkillEntry(name: 'AI Integration', icon: FontAwesomeIcons.robot,          color: Color(0xFF5ABCB5)),
 ];
 
-// ─── Section ──────────────────────────────────────────────────────────────────
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
 
@@ -47,52 +46,47 @@ class SkillsSection extends StatelessWidget {
     final isMobile = ResponsiveLayout.isMobile(context);
     final isTablet = ResponsiveLayout.isTablet(context);
 
-    // Slightly lighter than the footer (0x0A1118 dark / 0x1B2A40 light)
-    // so both sections feel distinct even on the same dark background
-    final bgColor = isDark ? const Color(0xFF141F2B) : const Color(0xFF243345);
-    final primaryTeal = theme.primaryColor;
-    // final bgColor = isDark ? const Color(0xFF1C1C1C) : const Color(0xFF232323);
+    // Keep the "Our Services" light background vibe or adapt to theme
+    final bgColor = isDark ? const Color(0xFF141F2B) : const Color(0xFFF8F9FA);
+    final titleColor = isDark ? Colors.white : const Color(0xFF1B2A40);
 
     return Container(
       color: bgColor,
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20.0 : 60.0,
-        vertical: 70.0,
+        vertical: 80.0,
       ),
       child: Column(
         children: [
-          // ── Title ──────────────────────────────────────────────────────────
+          // Section Title
           Text(
             'MY SKILLS',
-            style: theme.textTheme.headlineLarge?.copyWith(
+            style: GoogleFonts.playfairDisplay(
+              fontSize: isMobile ? 36 : 48,
               fontWeight: FontWeight.w800,
-              letterSpacing: 4,
-              color: primaryTeal,
+              color: titleColor,
+              letterSpacing: 2,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),
           Container(
             width: 60,
             height: 3,
             decoration: BoxDecoration(
-              color: primaryTeal,
+              color: const Color(0xFF1CB4B8),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          const SizedBox(height: 48),
+          const SizedBox(height: 60),
 
-          // ── Body: Grid + Stats panel ────────────────────────────────────────
+          // Masonry Grid View + Experience Panel
           isMobile
               ? Column(
                   children: [
-                    _SkillsGrid(
-                      skills: _skills,
-                      crossAxisCount: 3,
-                      isDark: isDark,
-                      primaryTeal: primaryTeal,
-                    ),
-                    const SizedBox(height: 32),
-                    _ExperiencePanel(primaryTeal: primaryTeal, isDark: isDark),
+                    _buildGrid(isMobile, isTablet, isDark),
+                    const SizedBox(height: 48),
+                    _ExperiencePanel(isDark: isDark),
                   ],
                 )
               : Row(
@@ -100,144 +94,123 @@ class SkillsSection extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: _SkillsGrid(
-                        skills: _skills,
-                        crossAxisCount: isTablet ? 3 : 4,
-                        isDark: isDark,
-                        primaryTeal: primaryTeal,
-                      ),
+                      child: _buildGrid(isMobile, isTablet, isDark),
                     ),
-                    const SizedBox(width: 24),
-                    SizedBox(
-                      width: 200,
-                      child: _ExperiencePanel(
-                        primaryTeal: primaryTeal,
-                        isDark: isDark,
-                      ),
-                    ),
+                    // const SizedBox(width: 32),
+                    // SizedBox(
+                    //   width: 200,
+                    //   child: _ExperiencePanel(isDark: isDark),
+                    // ),
                   ],
                 ),
         ],
       ),
     );
   }
-}
 
-// ─── Skills Grid ──────────────────────────────────────────────────────────────
-class _SkillsGrid extends StatelessWidget {
-  final List<_SkillEntry> skills;
-  final int crossAxisCount;
-  final bool isDark;
-  final Color primaryTeal;
-
-  const _SkillsGrid({
-    required this.skills,
-    required this.crossAxisCount,
-    required this.isDark,
-    required this.primaryTeal,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.1,
+  Widget _buildGrid(bool isMobile, bool isTablet, bool isDark) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 1400),
+      child: MasonryGridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: isMobile ? 2 : (isTablet ? 3 : 4),
+        ),
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+        itemCount: _skills.length,
+        itemBuilder: (context, index) {
+          return _SkillCard(
+            entry: _skills[index],
+            isDark: isDark,
+          );
+        },
       ),
-      itemCount: skills.length,
-      itemBuilder: (context, index) {
-        return _SkillLogoCard(
-          entry: skills[index],
-          isDark: isDark,
-        );
-      },
     );
   }
 }
 
-// ─── Skill Logo Card ──────────────────────────────────────────────────────────
-class _SkillLogoCard extends StatefulWidget {
+class _SkillCard extends StatefulWidget {
   final _SkillEntry entry;
   final bool isDark;
 
-  const _SkillLogoCard({required this.entry, required this.isDark});
+  const _SkillCard({
+    required this.entry,
+    required this.isDark,
+  });
 
   @override
-  State<_SkillLogoCard> createState() => _SkillLogoCardState();
+  State<_SkillCard> createState() => _SkillCardState();
 }
 
-class _SkillLogoCardState extends State<_SkillLogoCard> {
+class _SkillCardState extends State<_SkillCard> {
   bool _hovered = false;
 
   @override
   Widget build(BuildContext context) {
-    final cardBg = widget.isDark
-        ? const Color(0xFF1E2D3D)
-        : const Color(0xFF2E3F52);
-    final borderColor = _hovered
-        ? widget.entry.color.withValues(alpha: 0.8)
-        : Colors.white.withValues(alpha: 0.08);
+    // Light mode uses white cards like the "Services" design
+    final cardBg = widget.isDark ? const Color(0xFF1E2D3D) : Colors.white;
+    final titleColor = widget.isDark ? Colors.white : const Color(0xFF1B2A40);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         decoration: BoxDecoration(
-          color: _hovered
-              ? widget.entry.color.withValues(alpha: widget.isDark ? 0.12 : 0.08)
-              : cardBg,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: borderColor, width: 1.5),
-          boxShadow: _hovered
-              ? [
-                  BoxShadow(
-                    color: widget.entry.color.withValues(alpha: 0.28),
-                    blurRadius: 18,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 6),
-                  )
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  )
-                ],
+          color: cardBg,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            if (_hovered)
+              BoxShadow(
+                color: widget.entry.color.withValues(alpha: 0.15),
+                blurRadius: 30,
+                offset: const Offset(0, 15),
+              )
+            else
+              BoxShadow(
+                color: widget.isDark
+                    ? Colors.black.withValues(alpha: 0.2)
+                    : Colors.black.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+          ],
+          border: Border.all(
+            color: _hovered
+                ? widget.entry.color.withValues(alpha: 0.5)
+                : Colors.transparent,
+            width: 1,
+          ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Icon
             AnimatedScale(
-              scale: _hovered ? 1.18 : 1.0,
+              scale: _hovered ? 1.15 : 1.0,
               duration: const Duration(milliseconds: 200),
               child: FaIcon(
                 widget.entry.icon,
                 color: widget.entry.color,
-                size: 30,
+                size: 38,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
+            // Title
             Text(
               widget.entry.name,
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 11,
+              style: GoogleFonts.inter(
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: _hovered
-                    ? widget.entry.color
-                    : Colors.white.withValues(alpha: 0.60),
-                letterSpacing: 0.3,
+                color: titleColor,
+                height: 1.2,
               ),
               textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
@@ -248,13 +221,11 @@ class _SkillLogoCardState extends State<_SkillLogoCard> {
 
 // ─── Experience Panel ─────────────────────────────────────────────────────────
 class _ExperiencePanel extends StatelessWidget {
-  final Color primaryTeal;
   final bool isDark;
 
-  const _ExperiencePanel({required this.primaryTeal, required this.isDark});
+  const _ExperiencePanel({required this.isDark});
 
   Future<void> _downloadCV() async {
-    // Replace with your actual Google Drive / CV URL
     const cvUrl = 'https://drive.google.com/your-cv-link';
     final uri = Uri.parse(cvUrl);
     if (await canLaunchUrl(uri)) {
@@ -264,12 +235,13 @@ class _ExperiencePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panelBg = isDark ? const Color(0xFF1E2D3D) : const Color(0xFF2E3F52);
-    final textColor = Colors.white;
-    final subTextColor = Colors.white70;
+    final panelBg = isDark ? const Color(0xFF1E2D3D) : Colors.white;
+    final primaryTeal = const Color(0xFF1CB4B8);
+    final textColor = isDark ? Colors.white : const Color(0xFF1B2A40);
+    final subTextColor = isDark ? Colors.white70 : const Color(0xFF6B7A90);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 28),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
       decoration: BoxDecoration(
         color: panelBg,
         borderRadius: BorderRadius.circular(16),
@@ -290,8 +262,7 @@ class _ExperiencePanel extends StatelessWidget {
         children: [
           Text(
             '1.5+',
-            style: TextStyle(
-              fontFamily: 'Inter',
+            style: GoogleFonts.inter(
               fontSize: 52,
               fontWeight: FontWeight.w800,
               color: primaryTeal,
@@ -301,8 +272,7 @@ class _ExperiencePanel extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Years',
-            style: TextStyle(
-              fontFamily: 'Inter',
+            style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w700,
               color: textColor,
@@ -310,8 +280,7 @@ class _ExperiencePanel extends StatelessWidget {
           ),
           Text(
             'Experience',
-            style: TextStyle(
-              fontFamily: 'Inter',
+            style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w700,
               color: textColor,
@@ -319,8 +288,7 @@ class _ExperiencePanel extends StatelessWidget {
           ),
           Text(
             'Working',
-            style: TextStyle(
-              fontFamily: 'Inter',
+            style: GoogleFonts.inter(
               fontSize: 15,
               fontWeight: FontWeight.w600,
               color: subTextColor,
@@ -369,8 +337,7 @@ class _HoverCVButtonState extends State<_HoverCVButton> {
           ),
           child: Text(
             'DOWNLOAD CV',
-            style: TextStyle(
-              fontFamily: 'Inter',
+            style: GoogleFonts.inter(
               fontSize: 11,
               fontWeight: FontWeight.w700,
               color: _hovered ? Colors.white : widget.primaryTeal,
