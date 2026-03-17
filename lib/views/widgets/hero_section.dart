@@ -9,89 +9,93 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final isMobile = ResponsiveLayout.isMobile(context);
-    final height = isMobile ? null : MediaQuery.of(context).size.height;
-
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final bgColor = isDark ? const Color(0xFF1C1C1C) : const Color(0xFF232323);
 
     return Container(
-      // Using the exact dark background color from the image mockup
       color: bgColor,
       width: double.infinity,
-      height: 800,
+      // ✅ Removed fixed height — let content dictate height on mobile
+      height: isMobile ? null : 700,
       child: isMobile
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 80),
-              child: Column(
-                children: [
-                  _buildLeftContent(context, isMobile: true),
-                  const SizedBox(height: 60),
-                  _buildImageContent(context, isMobile: true),
-                ],
-              ),
-            )
+          ? SingleChildScrollView(
+        // ✅ Wrapped in scroll view to prevent overflow on small devices
+        child: Padding(
+          padding: const EdgeInsets.only(right: 24, left: 24, bottom: 64 ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildImageContent(context, isMobile: true),
+              const SizedBox(height: 24),
+              _buildLeftContent(context, isMobile: true),
+            ],
+          ),
+        ),
+      )
           : Stack(
-              children: [
-                // Right side image (absolutely positioned)
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  top: 0,
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  child: _buildImageContent(context, isMobile: false),
-                ),
-                
-                // Left side textual content
-                Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 80.0, right: 40.0, top: 120, bottom: 40),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: _buildLeftContent(context, isMobile: false),
-                    ),
-                  ),
-                ),
-              ],
+        children: [
+          //Image part
+          Positioned(
+            right: 0,
+            bottom: 0,
+            top: 0,
+            width: MediaQuery.of(context).size.width * 0.45,
+            child: _buildImageContent(context, isMobile: false),
+          ),
+          // Left content
+          Positioned.fill(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 80.0, right: 40.0, top: 120, bottom: 40),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: _buildLeftContent(context, isMobile: false),
+              ),
             ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildLeftContent(BuildContext context, {required bool isMobile}) {
-    // Determine the name to show (extracted from UserData or fallback)
-    final name = UserData.name.isNotEmpty ? UserData.name : "Uttam Shah";
+    final name =
+    UserData.name.isNotEmpty ? UserData.name : "Uttam Shah";
 
     return Column(
-      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      crossAxisAlignment:
+      isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (!isMobile) const SizedBox(height: 40),
+        // ── Greeting ──────────────────────────────────────────
         Text(
-          "Hi There!",
+          "Hi There! 👋",
           style: GoogleFonts.poppins(
-            fontSize: isMobile ? 24 : 32,
+            fontSize: isMobile ? 20 : 32,
             fontWeight: FontWeight.w400,
             color: Colors.white70,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
         const SizedBox(height: 8),
+
+        // ── Name + Role ────────────────────────────────────────
         RichText(
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
           text: TextSpan(
             style: GoogleFonts.poppins(
-              fontSize: isMobile ? 40 : 64,
+              // ✅ Scaled down font size for mobile to prevent overflow
+              fontSize: isMobile ? 32 : 64,
               fontWeight: FontWeight.w800,
               color: Colors.white,
-              height: 1.1,
+              height: 1.15,
               letterSpacing: -1,
             ),
             children: [
               TextSpan(text: "I am $name\n"),
               const TextSpan(text: "Flutter Developer"),
-              // The terminal typing cursor effect
               TextSpan(
                 text: "|",
                 style: GoogleFonts.poppins(
@@ -103,44 +107,70 @@ class HeroSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
+
+        // ── Bio ────────────────────────────────────────────────
         Text(
           "I build high-performance Android & Flutter\napps with clean architecture and great\nuser experience.",
           style: GoogleFonts.poppins(
-            fontSize: isMobile ? 20 : 28,
+            // ✅ Scaled font size for mobile
+            fontSize: isMobile ? 15 : 22,
             fontWeight: FontWeight.w400,
             color: Colors.white54,
+            height: 1.6,
           ),
           textAlign: isMobile ? TextAlign.center : TextAlign.left,
         ),
-        const SizedBox(height: 48),
-        // Action Button
+        const SizedBox(height: 36),
+
+        // ── CTA Button ─────────────────────────────────────────
         InkWell(
           onTap: () => launchUrl(Uri.parse('mailto:${UserData.email}')),
+          borderRadius: BorderRadius.circular(4),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            padding: EdgeInsets.symmetric(
+              // ✅ Slightly smaller padding on mobile
+              horizontal: isMobile ? 24 : 32,
+              vertical: isMobile ? 14 : 16,
+            ),
             decoration: BoxDecoration(
-              color: const Color(0xFF1db954), // Green action button from image
+              color: const Color(0xFF1db954),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               "Contact Me",
               style: GoogleFonts.poppins(
-                fontSize: 16,
+                fontSize: isMobile ? 14 : 16,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
             ),
           ),
         ),
-        
+
+        SizedBox(height: isMobile ? 40 : 0),
         if (!isMobile) const Spacer(),
-        if (isMobile) const SizedBox(height: 60),
-        
-        // Bottom details
-        Row(
-          mainAxisAlignment: isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
+
+        // ── Contact Info Row ────────────────────────────────────
+        // ✅ On mobile: wrap into a column to avoid horizontal overflow
+        isMobile
+            ? Column(
+
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildContactInfoBlock("Email", UserData.email,
+                isMobile: true),
+            const SizedBox(height: 16),
+            _buildContactInfoBlock("Phone", UserData.phone,
+                isMobile: true),
+            const SizedBox(height: 16),
+            _buildContactInfoBlock("Location", "New Delhi, India",
+                isMobile: true),
+          ],
+        )
+            : Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min, // Keep tight bound
+          mainAxisSize: MainAxisSize.min,
           children: [
             _buildContactInfoBlock("Email", UserData.email),
             _buildDivider(),
@@ -162,23 +192,26 @@ class HeroSection extends StatelessWidget {
     );
   }
 
-  Widget _buildContactInfoBlock(String title, String value) {
+  Widget _buildContactInfoBlock(String title, String value,
+      {bool isMobile = false}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      // ✅ Center-align on mobile, left-align on desktop
+      crossAxisAlignment:
+      isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Text(
           title,
           style: GoogleFonts.poppins(
-            fontSize: 16,
+            fontSize: isMobile ? 13 : 16,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         Text(
           value,
           style: GoogleFonts.poppins(
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             fontWeight: FontWeight.w400,
             color: Colors.white54,
           ),
@@ -188,18 +221,21 @@ class HeroSection extends StatelessWidget {
   }
 
   Widget _buildImageContent(BuildContext context, {required bool isMobile}) {
-    // In desktop, the image spans the right half
     return Container(
-      width: isMobile ? 300 : double.infinity,
-      height: isMobile ? 400 : double.infinity,
-      decoration: const BoxDecoration(
-        // For accurate representation we need a placeholder or the actual asset
-        // The previous code had "assets/images/uttam_image.png"
-      ),
-      child: Image.asset(
-        'assets/images/uttam_image2.png',
-        fit: isMobile ? BoxFit.contain : BoxFit.cover,
-        alignment: isMobile ? Alignment.center : Alignment.centerLeft,
+      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+      width: isMobile ? 320 : double.infinity,
+      height: isMobile ? 320 : double.infinity,
+      child: ClipRect(
+        child: Transform.scale(
+          scale: 1.4,                          // 👈 Zoom level (2x = zoom into 50% of image)
+          alignment: Alignment(0.0, -0.6),
+          child: Image.asset(
+            'assets/images/uttam_image2.png',
+            width: isMobile ? 320 : double.infinity,
+            height: isMobile ? 320 : double.infinity,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
       ),
     );
   }

@@ -85,8 +85,8 @@ class SkillsSection extends StatelessWidget {
               ? Column(
                   children: [
                     _buildGrid(isMobile, isTablet, isDark),
-                    const SizedBox(height: 48),
-                    _ExperiencePanel(isDark: isDark),
+                    // const SizedBox(height: 48),
+                    // _ExperiencePanel(isDark: isDark),
                   ],
                 )
               : Row(
