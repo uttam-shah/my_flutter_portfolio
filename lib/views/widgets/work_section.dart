@@ -248,7 +248,6 @@ class _WorkSectionState extends State<WorkSection> {
       ],
     );
 
-    // image section
     final rightContent = Center(
 
       child: Container(
