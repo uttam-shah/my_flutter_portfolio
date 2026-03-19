@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_portfolio/views/widgets/smart_hero_section.dart' hide HeroSection;
 import 'package:provider/provider.dart';
 import 'package:my_flutter_portfolio/viewmodels/portfolio_viewmodel.dart';
 import 'package:my_flutter_portfolio/views/widgets/header.dart';
@@ -25,18 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         controller: viewModel.scrollController,
         slivers: [
-          const HeaderSliver(),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                HeroSection(key: viewModel.homeKey),
-                WorkSection(key: viewModel.worksKey),
-                SkillsSection(key: viewModel.skillsKey),
-                ExperienceSection(key: viewModel.experienceKey),
-                EducationSection(key: viewModel.educationKey),
-                const Footer(),
-              ],
+          // ❌ Remove HeaderSliver — nav is now inside SmartHeroSection
+          SliverToBoxAdapter(
+            child: SmartHeroSection(
+              key: viewModel.homeKey,
+              scrollController: viewModel.scrollController, // ✅ passed in
             ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              WorkSection(key: viewModel.worksKey),
+              SkillsSection(key: viewModel.skillsKey),
+              ExperienceSection(key: viewModel.experienceKey),
+              EducationSection(key: viewModel.educationKey),
+              const Footer(),
+            ]),
           ),
         ],
       ),

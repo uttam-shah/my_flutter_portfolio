@@ -41,7 +41,8 @@ class HeroSection extends StatelessWidget {
             right: 0,
             bottom: 0,
             top: 0,
-            width: MediaQuery.of(context).size.width * 0.45,
+            // width: MediaQuery.of(context).size.width * 0.45,
+            width: 700,
             child: _buildImageContent(context, isMobile: false),
           ),
           // Left content
@@ -220,34 +221,6 @@ class HeroSection extends StatelessWidget {
     );
   }
 
-  // Widget _buildImageContent(BuildContext context, {required bool isMobile}) {
-  //   final width = MediaQuery.of(context).size.width;
-  //
-  //   // Square size: reasonable on mobile, capped on large desktops
-  //   final double imageSize = isMobile
-  //       ? (width * 0.55).clamp(180.0, 280.0)   // bigger than the old width*0.2
-  //       : (width * 0.40).clamp(240.0, 460.0);  // capped so it doesn't explode
-  //
-  //   return Align(
-  //     alignment: isMobile ? Alignment.center : Alignment.centerRight,
-  //     child: SizedBox(
-  //       width: imageSize,
-  //       height: imageSize, // square cutout
-  //       child: ClipRRect(
-  //         borderRadius: BorderRadius.circular(isMobile ? 20 : 0),
-  //         child: Image.asset(
-  //           'assets/images/uttam_image2.png',
-  //           width: imageSize,
-  //           height: imageSize,
-  //           fit: BoxFit.cover,
-  //           // Anchors to the top → face always visible, crops from bottom
-  //           alignment: const Alignment(0.0, -0.6),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _buildImageContent(BuildContext context, {required bool isMobile}) {
     var width = MediaQuery.of(context).size.width;
     return Container(
@@ -259,7 +232,7 @@ class HeroSection extends StatelessWidget {
       child: ClipRect(
         child: Transform.scale(
           scale: 1.4,                          // 👈 Zoom level (2x = zoom into 50% of image)
-          alignment: Alignment(0.0, -0.6),
+          alignment: Alignment(0.0, -0.3),
           child: Image.asset(
             'assets/images/uttam_image2.png',
             // width: isMobile ? 320 : double.infinity,
