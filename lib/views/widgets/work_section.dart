@@ -250,7 +250,8 @@ class _WorkSectionState extends State<WorkSection> {
 
     final rightContent = Center(
 
-      child: Container(child: Image.asset('assets/images/computer_screen.png', fit: BoxFit.cover,)),
+      child: Container(
+          child: Image.asset('assets/images/computer_screen.png', fit: BoxFit.cover,)),
 
       // child: Text(
       //   "Image Placeholder\n(Add your project image)",
