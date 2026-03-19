@@ -18,7 +18,7 @@ class HeroSection extends StatelessWidget {
       color: bgColor,
       width: double.infinity,
       // ✅ Removed fixed height — let content dictate height on mobile
-      height: isMobile ? null : 700,
+      height: isMobile ? null : 800,
       child: isMobile
           ? SingleChildScrollView(
         // ✅ Wrapped in scroll view to prevent overflow on small devices
@@ -220,19 +220,50 @@ class HeroSection extends StatelessWidget {
     );
   }
 
+  // Widget _buildImageContent(BuildContext context, {required bool isMobile}) {
+  //   final width = MediaQuery.of(context).size.width;
+  //
+  //   // Square size: reasonable on mobile, capped on large desktops
+  //   final double imageSize = isMobile
+  //       ? (width * 0.55).clamp(180.0, 280.0)   // bigger than the old width*0.2
+  //       : (width * 0.40).clamp(240.0, 460.0);  // capped so it doesn't explode
+  //
+  //   return Align(
+  //     alignment: isMobile ? Alignment.center : Alignment.centerRight,
+  //     child: SizedBox(
+  //       width: imageSize,
+  //       height: imageSize, // square cutout
+  //       child: ClipRRect(
+  //         borderRadius: BorderRadius.circular(isMobile ? 20 : 0),
+  //         child: Image.asset(
+  //           'assets/images/uttam_image2.png',
+  //           width: imageSize,
+  //           height: imageSize,
+  //           fit: BoxFit.cover,
+  //           // Anchors to the top → face always visible, crops from bottom
+  //           alignment: const Alignment(0.0, -0.6),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Widget _buildImageContent(BuildContext context, {required bool isMobile}) {
+    var width = MediaQuery.of(context).size.width;
     return Container(
       // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-      width: isMobile ? 320 : double.infinity,
-      height: isMobile ? 320 : double.infinity,
+      width: isMobile ? 420 : double.infinity,
+      height: isMobile ? 420 : double.infinity,
+      // width: isMobile ? width * 0.2 : double.infinity,
+      // height: isMobile ? width * 0.2 : double.infinity,
       child: ClipRect(
         child: Transform.scale(
           scale: 1.4,                          // 👈 Zoom level (2x = zoom into 50% of image)
           alignment: Alignment(0.0, -0.6),
           child: Image.asset(
             'assets/images/uttam_image2.png',
-            width: isMobile ? 320 : double.infinity,
-            height: isMobile ? 320 : double.infinity,
+            // width: isMobile ? 320 : double.infinity,
+            // height: isMobile ? 320 : double.infinity,
             fit: BoxFit.fitWidth,
           ),
         ),
