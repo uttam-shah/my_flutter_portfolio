@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_portfolio/views/widgets/smart_hero_section.dart' hide HeroSection;
+import 'package:my_flutter_portfolio/views/widgets/HeroSection/smart_hero_section.dart' hide HeroSection;
 import 'package:provider/provider.dart';
 import 'package:my_flutter_portfolio/viewmodels/portfolio_viewmodel.dart';
 import 'package:my_flutter_portfolio/views/widgets/header.dart';

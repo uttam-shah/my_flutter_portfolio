@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_portfolio/views/widgets/HeroSection/slide_text_block.dart';
+import 'package:my_flutter_portfolio/views/widgets/HeroSection/slider_preview_indicator.dart';
 import 'package:video_player/video_player.dart';
 
-import 'bg_media.dart';
+import '../../../core/constants/user_data.dart';
+import '../bg_media.dart';
 
 // ─────────────────────────────────────────────
 //  DATA MODELS
@@ -25,39 +29,42 @@ class SlideData {
 }
 
 const List<SlideData> kSlides = [
+
   SlideData(
-    imagePath: 'assets/images/image1.jpg',
+      imagePath: 'https://cdn.pixabay.com/video/2015/08/08/117-135736418_large.mp4',
+      headline: 'Architecting Modern\nScalable Systems',
+      subline: 'Clean code. Solid foundations.',
+      accentColor: Colors.white,
+      isVideo: true
+  ),
+
+  SlideData(
+    imagePath: 'https://cdn.pixabay.com/video/2018/02/09/14214-255797028_large.mp4',
     headline: 'Developing Full‑Stack\nFlutter Apps',
     subline: 'End-to-end, pixel-perfect, blazing fast.',
-    accentColor: Color(0xFF00E5FF),
-    isVideo: false
+    accentColor: Colors.white,
+    isVideo: true
   ),
   SlideData(
-    imagePath: 'assets/images/video2.mp4',
+    imagePath: 'https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4',
     headline: 'Ready to Push Your\nIdeas to Production',
     subline: 'From concept to deployment — smartly.',
-    accentColor: Color(0xFF69FF47),
+    accentColor: Colors.white,
     isVideo: true
   ),
+
   SlideData(
-    imagePath: 'assets/images/video3.mp4',
-    headline: 'Architecting Modern\nScalable Systems',
-    subline: 'Clean code. Solid foundations.',
-    accentColor: Color(0xFFFF6B6B),
-    isVideo: true
-  ),
-  SlideData(
-    imagePath: 'assets/images/video4.mp4',
+    imagePath: 'https://cdn.pixabay.com/video/2019/08/30/26419-358778810_large.mp4',
     headline: 'Crafting Beautiful\nUI Experiences',
     subline: 'Motion, depth and delight — built in.',
-    accentColor: Color(0xFFFFD93D),
+    accentColor: Colors.white,
     isVideo: true
   ),
   SlideData(
-    imagePath: 'assets/images/video5.mp4',
+    imagePath: 'https://cdn.pixabay.com/video/2025/04/07/270432_large.mp4',
     headline: 'Turning Complex\nProblems into Products',
     subline: 'Strategy meets engineering.',
-    accentColor: Color(0xFFB47AEA),
+    accentColor: Colors.white,
     isVideo: true
   ),
 ];
@@ -100,6 +107,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
   late Animation<double> _textFade;
   late Animation<Offset> _textSlide;
 
+
   @override
   void initState() {
     super.initState();
@@ -118,7 +126,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
     );
     _textFade = CurvedAnimation(parent: _textCtrl, curve: Curves.easeOut);
     _textSlide = Tween<Offset>(
-      begin: const Offset(0, 0.18),
+      begin: const Offset(-0.18, 0),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _textCtrl, curve: Curves.easeOut));
 
@@ -138,7 +146,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 4), (_) => _advance());
+    _timer = Timer.periodic(const Duration(seconds: 5), (_) => _advance());
   }
 
   void _advance({int? to}) {
@@ -152,6 +160,14 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
     _textCtrl.forward(from: 0);
   }
 
+  static const List<SlideIndicatorData> kIndicators = [
+    SlideIndicatorData(thumbnailPath: 'assets/images/image1.jpg'),
+    SlideIndicatorData(thumbnailPath: 'assets/images/image1.jpg'),
+    SlideIndicatorData(thumbnailPath: 'assets/images/image1.jpg'),
+    SlideIndicatorData(thumbnailPath: 'assets/images/image1.jpg'),
+    SlideIndicatorData(thumbnailPath: 'assets/images/image1.jpg'),
+  ];
+
   @override
   void dispose() {
     widget.scrollController.removeListener(_onScroll);
@@ -164,6 +180,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
   @override
   Widget build(BuildContext context) {
     final screenH = MediaQuery.of(context).size.height;
+    final screenW = MediaQuery.of(context).size.width;
 
     // The whole hero (bg + nav + text + dots) fades as user scrolls
     return Opacity(
@@ -174,12 +191,19 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
           fit: StackFit.expand,
           children: [
             // ── Background: previous slide ──
-            BgMedia(path: kSlides[_previous].imagePath, isVideo: kSlides[_current].isVideo,),
+
+            BgMedia(
+              key: ValueKey(kSlides[_current].imagePath),
+              path: kSlides[_previous].imagePath,
+              isVideo: kSlides[_previous].isVideo,),
 
             // ── Background: current slide fading in ──
             FadeTransition(
               opacity: _bgAnim,
-              child: BgMedia(path: kSlides[_current].imagePath, isVideo: kSlides[_current].isVideo,),
+              child: BgMedia(
+                key: ValueKey("fade_${kSlides[_current].imagePath}"),
+                path: kSlides[_current].imagePath,
+                isVideo: kSlides[_current].isVideo,),
             ),
 
             // ── Gradient overlay ──
@@ -199,22 +223,28 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
             ),
 
             // ── Centered profile + text ──
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _ProfileBadge(
-                      accentColor: kSlides[_current].accentColor),
-                  const SizedBox(height: 22),
-                  SlideTransition(
-                    position: _textSlide,
-                    child: FadeTransition(
-                      opacity: _textFade,
-                      child:
-                      _SlideTextBlock(slide: kSlides[_current]),
+            Positioned(
+
+              left: screenW * 0.05,
+              top: 0,
+              bottom: screenH * 0.28,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // _ProfileBadge(
+                    //     accentColor: kSlides[_current].accentColor),
+                    // const SizedBox(height: 22),
+                    SlideTransition(
+                      position: _textSlide,
+                      child: FadeTransition(
+                        opacity: _textFade,
+                        child:
+                        SlideTextBlock(slide: kSlides[_current]),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
@@ -226,7 +256,23 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
               child: _TopNavBar(),
             ),
 
-            // ── Dot indicators ──
+            Positioned(
+              bottom: 62,
+              right: 32,
+              child: SlidePreviewIndicators(
+                slides: kIndicators,
+                current: _current,
+                accentColor: kSlides[_current].accentColor,
+                autoPlayDuration: const Duration(seconds: 4),
+                onTap: (i) {
+                  _timer?.cancel();
+                  _advance(to: i);
+                  _startTimer();
+                },
+              ),
+            ),
+
+            //── Dot indicators ──
             Positioned(
               bottom: 40,
               left: 0,
@@ -247,6 +293,8 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
       ),
     );
   }
+
+
 }
 
 // ─────────────────────────────────────────────
@@ -264,17 +312,12 @@ class _TopNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'YN.',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w700,
+              UserData.name.split(' ')[0], // "Uttam"
+              style: GoogleFonts.caveat(
+                textStyle: Theme.of(context).textTheme.headlineLarge,
+                fontWeight: FontWeight.bold,
+                fontSize: 36,
                 color: Colors.white,
-                letterSpacing: 2,
-                shadows: [
-                  Shadow(
-                      blurRadius: 12,
-                      color: Colors.black.withOpacity(0.8)),
-                ],
               ),
             ),
             Row(
@@ -329,7 +372,6 @@ class _NavLinkState extends State<_NavLink> {
 //  BACKGROUND IMAGE
 // ─────────────────────────────────────────────
 
-
 // ─────────────────────────────────────────────
 //  PROFILE BADGE
 // ─────────────────────────────────────────────
@@ -339,135 +381,75 @@ class _ProfileBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 600),
-          width: 88,
-          height: 88,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: accentColor, width: 2.5),
-            boxShadow: [
-              BoxShadow(
-                color: accentColor.withOpacity(0.45),
-                blurRadius: 24,
-                spreadRadius: 4,
-              ),
-            ],
-          ),
-          child: ClipOval(
-            child: Image.asset(
-              'assets/profile.jpg',
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
-                color: const Color(0xFF1E1E2E),
-                child: Icon(Icons.person, size: 44, color: accentColor),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 600),
-              padding:
-              const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.10),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  color: accentColor.withOpacity(0.35),
-                  width: 1,
+    return Align(
+      child: Column(
+        children: [
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 600),
+            width: 108,
+            height: 108,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: accentColor, width: 2.5),
+              boxShadow: [
+                BoxShadow(
+                  color: accentColor.withOpacity(0.45),
+                  blurRadius: 24,
+                  spreadRadius: 4,
                 ),
-              ),
-              child: const Text(
-                'Your Name', // ← replace with your name
-                style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 2.2,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-//  SLIDE TEXT BLOCK
-// ─────────────────────────────────────────────
-class _SlideTextBlock extends StatelessWidget {
-  final SlideData slide;
-  const _SlideTextBlock({required this.slide});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          slide.headline,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 42,
-            fontWeight: FontWeight.w800,
-            height: 1.15,
-            letterSpacing: -0.5,
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                blurRadius: 20,
-                color: Colors.black.withOpacity(0.85),
-                offset: const Offset(0, 3),
-              ),
-              Shadow(
-                  blurRadius: 40,
-                  color: Colors.black.withOpacity(0.6)),
-            ],
-          ),
-        ),
-        const SizedBox(height: 14),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 600),
-          width: 180,
-          height: 2.5,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.transparent,
-                slide.accentColor,
-                Colors.transparent,
               ],
             ),
-            borderRadius: BorderRadius.circular(2),
+            child: ClipOval(
+              child: Transform.scale(
+                scale: 1.8,
+                alignment: Alignment(0.0, -0.9),
+                child: Image.asset(
+                  'assets/images/uttam_image2.png',
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    color: const Color(0xFF1E1E2E),
+                    child: Icon(Icons.person, size: 44, color: accentColor),
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-        const SizedBox(height: 14),
-        Text(
-          slide.subline,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 15,
-            letterSpacing: 1.0,
-            color: Colors.white.withOpacity(0.80),
-            shadows: [
-              Shadow(
-                  blurRadius: 14,
-                  color: Colors.black.withOpacity(0.9)),
-            ],
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 600),
+                padding:
+                const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: accentColor.withOpacity(0.35),
+                    width: 1,
+                  ),
+                ),
+                child: const Text(
+                  'Your Name', // ← replace with your name
+                  style: TextStyle(
+                    fontSize: 13,
+                    letterSpacing: 2.2,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
+
+
 
 // ─────────────────────────────────────────────
 //  DOT INDICATORS

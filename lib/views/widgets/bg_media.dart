@@ -17,25 +17,63 @@ class BgMedia extends StatefulWidget {
 
 class _BgMediaState extends State<BgMedia> {
   VideoPlayerController? _controller;
+  bool _initialized = false;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
+    
+    print('initState for link: ${widget.path}');
 
     if (widget.isVideo) {
-      _controller = VideoPlayerController.asset(widget.path)
+      _initVideo();
+    }
+  }
+
+  Future<void> _initVideo() async {
+    try {
+      _controller = VideoPlayerController.networkUrl(
+        Uri.parse(widget.path)
+      )
         ..initialize().then((_) {
-          setState(() {});
-          _controller!.setLooping(true);
-          _controller!.play();
+              // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+              setState(() {});
         });
+
+      print('Initializing');
+
+      // await _controller!.initialize();
+
+      // ✅ FIX 1: Mute BEFORE play — browsers block autoplay with sound
+      await _controller!.setVolume(0.0);
+
+      print('Mute BEFORE play ');
+
+      // ✅ FIX 2: Set looping BEFORE play
+      await _controller!.setLooping(true);
+
+      print('looping BEFORE play');
+
+      // ✅ FIX 3: Play only after everything is configured
+      await _controller!.play();
+
+      print('Play only after everything is configured');
+
+      if (mounted) {
+        setState(() => _initialized = true);
+      }
+    } catch (e) {
+      debugPrint('BgMedia video error: $e');
+      if (mounted) {
+        setState(() => _hasError = true);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (!widget.isVideo) {
-      // ✅ IMAGE
       return Image.asset(
         widget.path,
         fit: BoxFit.cover,
@@ -45,8 +83,8 @@ class _BgMediaState extends State<BgMedia> {
       );
     }
 
-    // ✅ VIDEO
-    if (_controller != null && _controller!.value.isInitialized) {
+    // Show video only when fully ready
+    if (_initialized && !_hasError && _controller!.value.isInitialized) {
       return SizedBox.expand(
         child: FittedBox(
           fit: BoxFit.cover,
@@ -54,11 +92,13 @@ class _BgMediaState extends State<BgMedia> {
             width: _controller!.value.size.width,
             height: _controller!.value.size.height,
             child: VideoPlayer(_controller!),
+
           ),
         ),
       );
     }
 
+    // Show fallback while loading or on error
     return _fallbackUI();
   }
 
@@ -66,6 +106,8 @@ class _BgMediaState extends State<BgMedia> {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
           colors: _fallback(widget.path),
         ),
       ),
@@ -80,20 +122,11 @@ class _BgMediaState extends State<BgMedia> {
 
   List<Color> _fallback(String path) {
     if (path.contains('video')) {
-      return [
-        Colors.black,
-        Colors.grey.shade900,
-      ];
+      return [Colors.black, Colors.grey.shade900];
     } else if (path.contains('profile')) {
-      return [
-        Colors.blue,
-        Colors.purple,
-      ];
+      return [Colors.blue, Colors.purple];
     } else {
-      return [
-        Colors.grey.shade800,
-        Colors.grey.shade600,
-      ];
+      return [Colors.grey.shade800, Colors.grey.shade600];
     }
   }
 }
