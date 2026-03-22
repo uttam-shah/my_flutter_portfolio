@@ -64,7 +64,7 @@ class PortfolioViewModel extends ChangeNotifier {
       case 'SKILLS':
         targetKey = skillsKey;
         break;
-      case 'WORKS':
+      case 'WORK':
         targetKey = worksKey;
         break;
       case 'EDUCATION':

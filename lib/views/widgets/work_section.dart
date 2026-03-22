@@ -3,6 +3,7 @@ import 'package:my_flutter_portfolio/core/constants/user_data.dart';
 import 'package:my_flutter_portfolio/core/utils/responsive_layout.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_portfolio/models/user_models.dart';
+import 'package:my_flutter_portfolio/views/project_details_screen.dart';
 
 class WorkSection extends StatefulWidget {
   const WorkSection({super.key});
@@ -264,28 +265,44 @@ class _WorkSectionState extends State<WorkSection> {
     );
 
     if (isMobile) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
-        child: Column(
-          children: [
-            leftContent,
-            const SizedBox(height: 40),
-            Expanded(child: rightContent),
-          ],
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => ProjectDetailsScreen(work: work)));
+        },
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Column(
+              children: [
+                leftContent,
+                const SizedBox(height: 40),
+                Expanded(child: rightContent),
+              ],
+            ),
+          ),
         ),
       );
     }
 
     // Desktop/Tablet
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 100), // padding to avoid arrows
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(flex: 2, child: leftContent),
-          const SizedBox(width: 40),
-          Expanded(flex: 3, child: rightContent),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ProjectDetailsScreen(work: work)));
+      },
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 100), // padding to avoid arrows
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(flex: 2, child: leftContent),
+              const SizedBox(width: 40),
+              Expanded(flex: 3, child: rightContent),
+            ],
+          ),
+        ),
       ),
     );
   }

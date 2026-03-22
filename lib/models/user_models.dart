@@ -42,10 +42,18 @@ class WorkModel {
   final String title;
   final String subtitle;
   final List<String> tools;
+  final String description;
+  final String? projectUrl;
+  final String? githubUrl;
+  final List<String> screenshots;
 
   WorkModel({
     required this.title,
     required this.subtitle,
     required this.tools,
+    required this.description,
+    this.projectUrl,
+    this.githubUrl,
+    required this.screenshots,
   });
 }

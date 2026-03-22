@@ -97,26 +97,57 @@ class UserData {
       title: "Bldox",
       subtitle: "Task & Project Management App",
       tools: ["Flutter", "Kotlin", "REST APIs", "Provider"],
+      description: "A complete cross-platform task & project management application. Features include role-based access control, real-time collaboration, and tracking progress across different teams and boards.",
+      projectUrl: "https://play.google.com/store/apps/details?id=com.teches.thikedaar",
+      githubUrl: null,
+      screenshots: [
+        "assets/images/computer_screen.png",
+        "assets/images/computer_screen.png" // Placeholder
+      ]
     ),
     WorkModel(
       title: "Smart Saloon Queue & Booking",
       subtitle: "AI Grooming & Appointment System",
       tools: ["Flutter", "Spring Boot", "PostgreSQL",],
+      description: "An AI-powered smart application that allows users to book salon appointments seamlessly. Automatically manages salon queues and estimates wait times accurately.",
+      projectUrl: "https://example.com/smart-saloon",
+      githubUrl: "https://github.com/uttam-shah/smart_saloon_demo",
+      screenshots: [
+        "assets/images/computer_screen.png",
+      ]
     ),
     WorkModel(
       title: "Personal Portfolio Website",
       subtitle: "Interactive Web Resume",
       tools: ["Flutter Web", "Provider", "Responsive UI", "MVVM", "Provider", "Responsive UI", "MVVM"],
+      description: "A visually stunning and interactive portfolio website built with Flutter Web. The site showcases a scrolling hero section, detailed works and projects, and a fully responsive layout.",
+      projectUrl: "https://uttam-shah.github.io/portfolio",
+      githubUrl: "https://github.com/uttam-shah/my_flutter_portfolio",
+      screenshots: [
+        "assets/images/computer_screen.png",
+      ]
     ),
     WorkModel(
       title: "Loan Management SDK",
       subtitle: "Secure SDK Integration",
       tools: ["Kotlin", "Jetpack Compose", "Firebase", "REST APIs"],
+      description: "A highly secure third-party integration SDK built in Kotlin, featuring Jetpack Compose UI. It manages the complete loan application workflow with Firebase Cloud Messaging.",
+      projectUrl: null,
+      githubUrl: null,
+      screenshots: [
+        "assets/images/computer_screen.png",
+      ]
     ),
     WorkModel(
       title: "IoT Monitoring System",
       subtitle: "Real-time Analytics App",
       tools: ["Java", "Kotlin", "BLE", "Firebase"],
+      description: "Implemented a BLE-based IoT application that receives device data securely, processes it efficiently on the mobile device, and uploads metrics to cloud servers for instant real-time client monitoring.",
+      projectUrl: null,
+      githubUrl: null,
+      screenshots: [
+        "assets/images/computer_screen.png",
+      ]
     ),
   ];
 }

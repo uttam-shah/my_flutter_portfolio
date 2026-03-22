@@ -40,13 +40,13 @@ class AppTheme {
         onSurface: AppColors.lightTextPrimary,
         onBackground: AppColors.lightTextPrimary,
       ),
-      textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme).copyWith(
-        displayLarge: GoogleFonts.inter(fontSize: 56, fontWeight: FontWeight.w800, color: AppColors.lightTextPrimary),
-        displayMedium: GoogleFonts.inter(fontSize: 40, fontWeight: FontWeight.w700, color: AppColors.lightTextPrimary),
-        headlineLarge: GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.w700, color: AppColors.lightTextPrimary),
-        titleLarge: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: AppColors.lightTextPrimary),
-        bodyLarge: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.lightTextSecondary),
-        bodyMedium: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.lightTextSecondary),
+      textTheme: GoogleFonts.lexendTextTheme(ThemeData.light().textTheme).copyWith(
+        displayLarge: GoogleFonts.lexend(fontSize: 56, fontWeight: FontWeight.w800, color: AppColors.lightTextPrimary),
+        displayMedium: GoogleFonts.lexend(fontSize: 40, fontWeight: FontWeight.w700, color: AppColors.lightTextPrimary),
+        headlineLarge: GoogleFonts.lexend(fontSize: 32, fontWeight: FontWeight.w700, color: AppColors.lightTextPrimary),
+        titleLarge: GoogleFonts.lexend(fontSize: 24, fontWeight: FontWeight.w600, color: AppColors.lightTextPrimary),
+        bodyLarge: GoogleFonts.lexend(fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.lightTextSecondary),
+        bodyMedium: GoogleFonts.lexend(fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.lightTextSecondary),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -82,13 +82,13 @@ class AppTheme {
         onSurface: AppColors.darkTextPrimary,
         onBackground: AppColors.darkTextPrimary,
       ),
-      textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme).copyWith(
-        displayLarge: GoogleFonts.inter(fontSize: 56, fontWeight: FontWeight.w800, color: AppColors.darkTextPrimary),
-        displayMedium: GoogleFonts.inter(fontSize: 40, fontWeight: FontWeight.w700, color: AppColors.darkTextPrimary),
-        headlineLarge: GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.w700, color: AppColors.darkTextPrimary),
-        titleLarge: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: AppColors.darkTextPrimary),
-        bodyLarge: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.darkTextSecondary),
-        bodyMedium: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.darkTextSecondary),
+      textTheme: GoogleFonts.lexendTextTheme(ThemeData.dark().textTheme).copyWith(
+        displayLarge: GoogleFonts.lexend(fontSize: 56, fontWeight: FontWeight.w800, color: AppColors.darkTextPrimary),
+        displayMedium: GoogleFonts.lexend(fontSize: 40, fontWeight: FontWeight.w700, color: AppColors.darkTextPrimary),
+        headlineLarge: GoogleFonts.lexend(fontSize: 32, fontWeight: FontWeight.w700, color: AppColors.darkTextPrimary),
+        titleLarge: GoogleFonts.lexend(fontSize: 24, fontWeight: FontWeight.w600, color: AppColors.darkTextPrimary),
+        bodyLarge: GoogleFonts.lexend(fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.darkTextSecondary),
+        bodyMedium: GoogleFonts.lexend(fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.darkTextSecondary),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

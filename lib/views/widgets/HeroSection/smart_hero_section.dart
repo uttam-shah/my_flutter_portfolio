@@ -9,6 +9,8 @@ import 'package:video_player/video_player.dart';
 import '../../../core/constants/user_data.dart';
 import '../bg_media.dart';
 import '../profle_badge.dart';
+import 'package:provider/provider.dart';
+import 'package:my_flutter_portfolio/viewmodels/portfolio_viewmodel.dart';
 
 // ─────────────────────────────────────────────
 //  DATA MODELS
@@ -94,7 +96,7 @@ const List<SlideData> kSlides = [
   ),
 ];
 
-const List<String> kNavItems = ['Home', 'About', 'Work', 'Skills', 'Contact'];
+const List<String> kNavItems = ['Home', 'Work', 'Skills', 'Experience',  'Education'];
 
 // ─────────────────────────────────────────────
 //  SMART HERO SECTION  ← drop this into HomeScreen
@@ -357,7 +359,16 @@ class _TopNavBar extends StatelessWidget {
               children: kNavItems
                   .map((item) => Padding(
                 padding: const EdgeInsets.only(left: 28),
-                child: _NavLink(label: item),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    context.read<PortfolioViewModel>().scrollToSectionByTitle(item.toUpperCase());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: _NavLink(label: item),
+                  ),
+                ),
               ))
                   .toList(),
             ),
@@ -380,6 +391,7 @@ class _NavLinkState extends State<_NavLink> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedDefaultTextStyle(

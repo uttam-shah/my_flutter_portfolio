@@ -71,7 +71,7 @@ class ExperienceSection extends StatelessWidget {
                 children: [
                   Text(
                     exp.company,
-                    style: theme.textTheme.titleLarge?.copyWith(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
