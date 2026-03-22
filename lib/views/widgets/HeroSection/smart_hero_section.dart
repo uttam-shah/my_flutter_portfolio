@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../../core/constants/user_data.dart';
 import '../bg_media.dart';
+import '../profle_badge.dart';
 
 // ─────────────────────────────────────────────
 //  DATA MODELS
@@ -31,39 +32,39 @@ class SlideData {
 const List<SlideData> kSlides = [
 
   SlideData(
-      imagePath: 'https://cdn.pixabay.com/video/2015/08/08/117-135736418_large.mp4',
-      headline: 'Architecting Modern\nScalable Systems',
-      subline: 'Clean code. Solid foundations.',
+      imagePath: 'https://cdn.pixabay.com/video/2018/02/09/14214-255797028_large.mp4',
+      headline: 'Developing Full‑Stack\nFlutter Apps',
+      subline: 'End-to-end, pixel-perfect, blazing fast.',
       accentColor: Colors.white,
       isVideo: true
   ),
 
   SlideData(
-    imagePath: 'https://cdn.pixabay.com/video/2018/02/09/14214-255797028_large.mp4',
-    headline: 'Developing Full‑Stack\nFlutter Apps',
-    subline: 'End-to-end, pixel-perfect, blazing fast.',
-    accentColor: Colors.white,
-    isVideo: true
+      imagePath: 'https://cdn.pixabay.com/video/2015/08/08/117-135736418_large.mp4',
+      headline: 'Architecting Modern\nScalable Systems',
+      subline: 'Engineered with clarity, performance, and reliability.',
+      accentColor: Colors.white,
+      isVideo: true
   ),
   SlideData(
     imagePath: 'https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4',
-    headline: 'Ready to Push Your\nIdeas to Production',
-    subline: 'From concept to deployment — smartly.',
+      headline: 'Let’s Turn Your Ideas\nInto Real Products',
+      subline: 'From concept to production — fast, scalable, reliable.',
     accentColor: Colors.white,
     isVideo: true
   ),
 
   SlideData(
     imagePath: 'https://cdn.pixabay.com/video/2019/08/30/26419-358778810_large.mp4',
-    headline: 'Crafting Beautiful\nUI Experiences',
-    subline: 'Motion, depth and delight — built in.',
+      headline: 'Designing Interfaces\nThat Feel Alive',
+      subline: 'Where motion meets meaning — crafted to inspire.',
     accentColor: Colors.white,
     isVideo: true
   ),
   SlideData(
     imagePath: 'https://cdn.pixabay.com/video/2025/04/07/270432_large.mp4',
-    headline: 'Turning Complex\nProblems into Products',
-    subline: 'Strategy meets engineering.',
+      headline: 'From Complex Problems\nto Scalable Products',
+      subline: 'Driven by strategy. Built with precision.',
     accentColor: Colors.white,
     isVideo: true
   ),
@@ -191,7 +192,6 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
           fit: StackFit.expand,
           children: [
             // ── Background: previous slide ──
-
             BgMedia(
               key: ValueKey(kSlides[_current].imagePath),
               path: kSlides[_previous].imagePath,
@@ -256,21 +256,21 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
               child: _TopNavBar(),
             ),
 
-            Positioned(
-              bottom: 62,
-              right: 32,
-              child: SlidePreviewIndicators(
-                slides: kIndicators,
-                current: _current,
-                accentColor: kSlides[_current].accentColor,
-                autoPlayDuration: const Duration(seconds: 4),
-                onTap: (i) {
-                  _timer?.cancel();
-                  _advance(to: i);
-                  _startTimer();
-                },
-              ),
-            ),
+            // Positioned(
+            //   bottom: 62,
+            //   right: 32,
+            //   child: SlidePreviewIndicators(
+            //     slides: kIndicators,
+            //     current: _current,
+            //     accentColor: kSlides[_current].accentColor,
+            //     autoPlayDuration: const Duration(seconds: 4),
+            //     onTap: (i) {
+            //       _timer?.cancel();
+            //       _advance(to: i);
+            //       _startTimer();
+            //     },
+            //   ),
+            // ),
 
             //── Dot indicators ──
             Positioned(
@@ -311,14 +311,23 @@ class _TopNavBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              UserData.name.split(' ')[0], // "Uttam"
-              style: GoogleFonts.caveat(
-                textStyle: Theme.of(context).textTheme.headlineLarge,
-                fontWeight: FontWeight.bold,
-                fontSize: 36,
-                color: Colors.white,
-              ),
+
+            Row(
+              children: [
+                ProfileBadge(
+                    accentColor: Colors.white),
+                const SizedBox(width: 12),
+
+                Text(
+                  UserData.name.split(' ')[0], // "Uttam"
+                  style: GoogleFonts.caveat(
+                    textStyle: Theme.of(context).textTheme.headlineLarge,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
             Row(
               children: kNavItems
@@ -356,6 +365,7 @@ class _NavLinkState extends State<_NavLink> {
           letterSpacing: 1.4,
           fontWeight: _hovered ? FontWeight.w600 : FontWeight.w400,
           color: _hovered ? Colors.white : Colors.white70,
+
           shadows: [
             Shadow(
                 blurRadius: 8,
@@ -367,88 +377,6 @@ class _NavLinkState extends State<_NavLink> {
     );
   }
 }
-
-// ─────────────────────────────────────────────
-//  BACKGROUND IMAGE
-// ─────────────────────────────────────────────
-
-// ─────────────────────────────────────────────
-//  PROFILE BADGE
-// ─────────────────────────────────────────────
-class _ProfileBadge extends StatelessWidget {
-  final Color accentColor;
-  const _ProfileBadge({required this.accentColor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      child: Column(
-        children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 600),
-            width: 108,
-            height: 108,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: accentColor, width: 2.5),
-              boxShadow: [
-                BoxShadow(
-                  color: accentColor.withOpacity(0.45),
-                  blurRadius: 24,
-                  spreadRadius: 4,
-                ),
-              ],
-            ),
-            child: ClipOval(
-              child: Transform.scale(
-                scale: 1.8,
-                alignment: Alignment(0.0, -0.9),
-                child: Image.asset(
-                  'assets/images/uttam_image2.png',
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
-                    color: const Color(0xFF1E1E2E),
-                    child: Icon(Icons.person, size: 44, color: accentColor),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 600),
-                padding:
-                const EdgeInsets.symmetric(horizontal: 18, vertical: 7),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.10),
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: accentColor.withOpacity(0.35),
-                    width: 1,
-                  ),
-                ),
-                child: const Text(
-                  'Your Name', // ← replace with your name
-                  style: TextStyle(
-                    fontSize: 13,
-                    letterSpacing: 2.2,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 
 
 // ─────────────────────────────────────────────
