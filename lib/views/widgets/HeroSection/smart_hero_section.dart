@@ -32,7 +32,7 @@ class SlideData {
 const List<SlideData> kSlides = [
 
   SlideData(
-      imagePath: 'https://cdn.pixabay.com/video/2018/02/09/14214-255797028_large.mp4',
+      imagePath: 'https://cdn.pixabay.com/video/2015/12/11/1625-148614367_medium.mp4',
       headline: 'Developing Full‑Stack\nFlutter Apps',
       subline: 'End-to-end, pixel-perfect, blazing fast.',
       accentColor: Colors.white,
@@ -55,7 +55,7 @@ const List<SlideData> kSlides = [
   ),
 
   SlideData(
-    imagePath: 'https://cdn.pixabay.com/video/2019/08/30/26419-358778810_large.mp4',
+    imagePath: 'https://cdn.pixabay.com/video/2025/08/24/299527_large.mp4',
       headline: 'Designing Interfaces\nThat Feel Alive',
       subline: 'Where motion meets meaning — crafted to inspire.',
     accentColor: Colors.white,
@@ -67,6 +67,30 @@ const List<SlideData> kSlides = [
       subline: 'Driven by strategy. Built with precision.',
     accentColor: Colors.white,
     isVideo: true
+  ),
+// new
+  SlideData(
+      imagePath: 'https://cdn.pixabay.com/video/2016/08/22/4733-179738669_large.mp4',
+      headline: 'Building Products\nThat Users Love',
+      subline: 'Blending design, logic, and seamless experience.',
+      accentColor: Colors.white,
+      isVideo: true
+  ),
+
+  SlideData(
+      imagePath: 'https://cdn.pixabay.com/video/2022/10/24/136268-764387688_large.mp4',
+      headline: 'Let’s Build Something\nExceptional Together',
+      subline: 'Fast, scalable, and built to last.',
+      accentColor: Colors.white,
+      isVideo: true
+  ),
+
+  SlideData(
+      imagePath: 'https://cdn.pixabay.com/video/2022/10/24/136264-764387675_large.mp4',
+      headline: 'Crafting Interfaces\nThat Feel Effortless',
+      subline: 'Smooth, intuitive, and user-focused.',
+      accentColor: Colors.white,
+      isVideo: true
   ),
 ];
 
@@ -372,7 +396,15 @@ class _NavLinkState extends State<_NavLink> {
                 color: Colors.black.withOpacity(0.9)),
           ],
         ),
-        child: Text(widget.label.toUpperCase()),
+        child: Text(
+            widget.label.toUpperCase(),
+          style: GoogleFonts.lexend(
+            textStyle: Theme.of(context).textTheme.titleSmall,
+            // fontWeight: FontWeight.bold,
+            fontSize: 12,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -400,29 +432,25 @@ class _DotIndicators extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(count, (i) {
-        final isActive = i == current;
+        final distance = (i - current).abs();
+
+        // Size shrinks with distance: active = 14, each step down by ~2px
+        final num size = (9 - distance * 2).clamp(6.0, 14.0);
+
+        // Opacity fades with distance: active = 1.0, falloff per step
+        final double opacity = (1.0 - distance * 0.2).clamp(0.2, 1.0);
+
         return GestureDetector(
           onTap: () => onTap(i),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 400),
             curve: Curves.easeInOut,
             margin: const EdgeInsets.symmetric(horizontal: 5),
-            width: isActive ? 28 : 8,
-            height: 8,
+            width: size.toDouble(),
+            height: size.toDouble(),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: isActive
-                  ? accentColor
-                  : Colors.white.withOpacity(0.35),
-              boxShadow: isActive
-                  ? [
-                BoxShadow(
-                  color: accentColor.withOpacity(0.6),
-                  blurRadius: 10,
-                  spreadRadius: 1,
-                ),
-              ]
-                  : [],
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(opacity),
             ),
           ),
         );

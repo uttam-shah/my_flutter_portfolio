@@ -47,37 +47,36 @@ class SkillsSection extends StatelessWidget {
     final isTablet = ResponsiveLayout.isTablet(context);
 
     // Keep the "Our Services" light background vibe or adapt to theme
-    final bgColor = isDark ? const Color(0xFF141F2B) : const Color(0xFFF8F9FA);
+    final bgColor = !isDark ? Colors.grey.shade50 : theme.scaffoldBackgroundColor;
     final titleColor = isDark ? Colors.white : const Color(0xFF1B2A40);
+    final textGray = isDark ? const Color(0xFF8B949E) : theme.colorScheme.onSurface.withValues(alpha: 0.6);
 
     return Container(
       color: bgColor,
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20.0 : 60.0,
+        // horizontal: isMobile ? 20.0 : 60.0,
+        // vertical: 80.0,
+        horizontal: isMobile ? 24.0 : 80.0,
         vertical: 80.0,
       ),
       child: Column(
         children: [
           // Section Title
-          Text(
-            'MY SKILLS',
-            style: GoogleFonts.playfairDisplay(
-              fontSize: isMobile ? 36 : 48,
-              fontWeight: FontWeight.w800,
-              color: titleColor,
-              letterSpacing: 2,
-            ),
-            textAlign: TextAlign.center,
+          Row(
+            children: [
+              Text(
+                "My Skills ",
+                style: GoogleFonts.lexend(
+                  fontSize: isMobile ? 40 : 56,
+                  fontWeight: FontWeight.bold,
+                  color: titleColor,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 10),
-          Container(
-            width: 60,
-            height: 3,
-            decoration: BoxDecoration(
-              color: const Color(0xFF1CB4B8),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
+          const SizedBox(height: 24),
+          Divider(color: textGray.withValues(alpha: 0.2), thickness: 1),
+          // const SizedBox(height: 10),
           const SizedBox(height: 60),
 
           // Masonry Grid View + Experience Panel

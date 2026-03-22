@@ -72,21 +72,21 @@ class _WorkSectionState extends State<WorkSection> {
           Row(
             children: [
               Text(
-                "My ",
-                style: GoogleFonts.inter(
+                "My Work ",
+                style: GoogleFonts.lexend(
                   fontSize: isMobile ? 40 : 56,
                   fontWeight: FontWeight.bold,
                   color: textWhite,
                 ),
               ),
-              Text(
-                "Work",
-                style: GoogleFonts.inter(
-                  fontSize: isMobile ? 40 : 56,
-                  fontWeight: FontWeight.bold,
-                  color: accentTeal,
-                ),
-              ),
+              // Text(
+              //   "Work",
+              //   style: GoogleFonts.inter(
+              //     fontSize: isMobile ? 40 : 56,
+              //     fontWeight: FontWeight.bold,
+              //     color: accentTeal,
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 24),
@@ -191,7 +191,7 @@ class _WorkSectionState extends State<WorkSection> {
           children: [
             Text(
               numberStr,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.lexend(
                 fontSize: isMobile ? 48 : 72,
                 fontWeight: FontWeight.w900,
                 color: textGray.withValues(alpha: 0.3),
@@ -205,7 +205,7 @@ class _WorkSectionState extends State<WorkSection> {
                 children: [
                   Text(
                     work.title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.lexend(
                       fontSize: isMobile ? 28 : 36,
                       fontWeight: FontWeight.bold,
                       color: textWhite,
@@ -215,7 +215,7 @@ class _WorkSectionState extends State<WorkSection> {
                   const SizedBox(height: 12),
                   Text(
                     work.subtitle,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.lexend(
                       fontSize: 16,
                       color: textGray,
                       fontWeight: FontWeight.w400,
@@ -224,7 +224,7 @@ class _WorkSectionState extends State<WorkSection> {
                   const SizedBox(height: 40),
                   Text(
                     "TOOLS & FEATURES",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.lexend(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
@@ -234,7 +234,7 @@ class _WorkSectionState extends State<WorkSection> {
                   const SizedBox(height: 12),
                   Text(
                     work.tools.join(", "),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.lexend(
                       fontSize: 14,
                       color: textGray,
                       height: 1.5,

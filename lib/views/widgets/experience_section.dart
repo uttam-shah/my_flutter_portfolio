@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_flutter_portfolio/core/constants/user_data.dart';
 import 'package:my_flutter_portfolio/core/utils/responsive_layout.dart';
 
@@ -9,6 +10,9 @@ class ExperienceSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isMobile = ResponsiveLayout.isMobile(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textGray = isDark ? const Color(0xFF8B949E) : theme.colorScheme.onSurface.withValues(alpha: 0.6);
+    final titleColor = isDark ? Colors.white : const Color(0xFF1B2A40);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -21,19 +25,18 @@ class ExperienceSection extends StatelessWidget {
           Row(
             children: [
               Text(
-                "My Work Experience",
-                style: theme.textTheme.headlineLarge,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Container(
-                  height: 1,
-                  color: theme.colorScheme.onSurface.withOpacity(0.2),
+                "My Work Experience ",
+                style: GoogleFonts.lexend(
+                  fontSize: isMobile ? 40 : 56,
+                  fontWeight: FontWeight.bold,
+                  color: titleColor,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 48),
+          const SizedBox(height: 24),
+          Divider(color: textGray.withValues(alpha: 0.2), thickness: 1),
+          const SizedBox(height: 60),
           
           // Timeline logic
           ListView.builder(
