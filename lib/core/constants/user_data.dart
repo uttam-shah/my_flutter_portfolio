@@ -106,15 +106,15 @@ class UserData {
       ]
     ),
     WorkModel(
-      title: "Smart Saloon Queue & Booking",
-      subtitle: "AI Grooming & Appointment System",
-      tools: ["Flutter", "Spring Boot", "PostgreSQL",],
-      description: "An AI-powered smart application that allows users to book salon appointments seamlessly. Automatically manages salon queues and estimates wait times accurately.",
-      projectUrl: "https://example.com/smart-saloon",
-      githubUrl: "https://github.com/uttam-shah/smart_saloon_demo",
-      screenshots: [
-        "assets/images/computer_screen.png",
-      ]
+        title: "Smart Salon Queue & Booking System",
+        subtitle: "AI-Powered Appointment & Queue Management",
+        tools: ["Flutter", "Spring Boot", "PostgreSQL"],
+        description: "Developed a full-stack salon management app enabling real-time appointment booking and smart queue handling. Designed to reduce wait times using dynamic scheduling and accurate wait-time estimation.",
+        projectUrl: null,
+        githubUrl: "https://github.com/uttam-shah/smart_saloon_demo",
+        screenshots: [
+          "assets/images/computer_screen.png",
+        ]
     ),
     WorkModel(
       title: "Personal Portfolio Website",

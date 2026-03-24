@@ -11,6 +11,7 @@ import '../bg_media.dart';
 import '../profle_badge.dart';
 import 'package:provider/provider.dart';
 import 'package:my_flutter_portfolio/viewmodels/portfolio_viewmodel.dart';
+import 'package:my_flutter_portfolio/core/utils/responsive_layout.dart';
 
 // ─────────────────────────────────────────────
 //  DATA MODELS
@@ -129,6 +130,10 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
   late AnimationController _bgCtrl;
   late Animation<double> _bgAnim;
 
+  // ── Slow burn scale ──
+  late AnimationController _scaleCtrl;
+  late Animation<double> _scaleAnim;
+
   // ── Text slide-up + fade ──
   late AnimationController _textCtrl;
   late Animation<double> _textFade;
@@ -142,22 +147,32 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
     // Background cross-fade
     _bgCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 1500),
     );
     _bgAnim = CurvedAnimation(parent: _bgCtrl, curve: Curves.easeInOut);
+
+    // Subtle scale burn
+    _scaleCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    );
+    _scaleAnim = Tween<double>(begin: 1.0, end: 1.05).animate(
+      CurvedAnimation(parent: _scaleCtrl, curve: Curves.linear),
+    );
 
     // Text animation
     _textCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 1200),
     );
     _textFade = CurvedAnimation(parent: _textCtrl, curve: Curves.easeOut);
     _textSlide = Tween<Offset>(
-      begin: const Offset(-0.18, 0),
+      begin: const Offset(-0.25, 0),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _textCtrl, curve: Curves.easeOut));
 
     _textCtrl.forward();
+    _scaleCtrl.forward();
     _startTimer();
 
     // Listen to the ViewModel's scroll controller for fade-out
@@ -185,6 +200,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
     });
     _bgCtrl.forward(from: 0);
     _textCtrl.forward(from: 0);
+    _scaleCtrl.forward(from: 0);
   }
 
   static const List<SlideIndicatorData> kIndicators = [
@@ -201,6 +217,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
     _timer?.cancel();
     _bgCtrl.dispose();
     _textCtrl.dispose();
+    _scaleCtrl.dispose();
     super.dispose();
   }
 
@@ -226,10 +243,14 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
             // ── Background: current slide fading in ──
             FadeTransition(
               opacity: _bgAnim,
-              child: BgMedia(
-                key: ValueKey("fade_${kSlides[_current].imagePath}"),
-                path: kSlides[_current].imagePath,
-                isVideo: kSlides[_current].isVideo,),
+              child: ScaleTransition(
+                scale: _scaleAnim,
+                child: BgMedia(
+                  key: ValueKey("fade_${kSlides[_current].imagePath}"),
+                  path: kSlides[_current].imagePath,
+                  isVideo: kSlides[_current].isVideo,
+                ),
+              ),
             ),
 
             // ── Gradient overlay ──
@@ -344,33 +365,51 @@ class _TopNavBar extends StatelessWidget {
                     accentColor: Colors.white),
                 const SizedBox(width: 12),
 
-                Text(
-                  UserData.name.split(' ')[0], // "Uttam"
-                  style: GoogleFonts.caveat(
-                    textStyle: Theme.of(context).textTheme.headlineLarge,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 36,
-                    color: Colors.white,
-                  ),
-                ),
+
               ],
             ),
             Row(
-              children: kNavItems
-                  .map((item) => Padding(
-                padding: const EdgeInsets.only(left: 28),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    context.read<PortfolioViewModel>().scrollToSectionByTitle(item.toUpperCase());
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: _NavLink(label: item),
+              children: [
+                if (!ResponsiveLayout.isMobile(context))
+                  ...kNavItems.map((item) => Padding(
+                    padding: const EdgeInsets.only(left: 28),
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        context.read<PortfolioViewModel>().scrollToSectionByTitle(item.toUpperCase());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: _NavLink(label: item),
+                      ),
+                    ),
+                  )),
+                if (ResponsiveLayout.isMobile(context))
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.menu, color: Colors.white, size: 28),
+                    color: const Color(0xFF1C1C1C),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    offset: const Offset(0, 50),
+                    onSelected: (String item) {
+                      context.read<PortfolioViewModel>().scrollToSectionByTitle(item.toUpperCase());
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return kNavItems.map((String item) {
+                        return PopupMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item.toUpperCase(),
+                            style: GoogleFonts.lexend(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      }).toList();
+                    },
                   ),
-                ),
-              ))
-                  .toList(),
+              ],
             ),
           ],
         ),

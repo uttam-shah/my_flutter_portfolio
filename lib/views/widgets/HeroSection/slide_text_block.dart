@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_flutter_portfolio/core/utils/responsive_layout.dart';
 import 'package:my_flutter_portfolio/views/widgets/HeroSection/smart_hero_section.dart';
 
 class SlideTextBlock extends StatelessWidget {
@@ -18,7 +19,11 @@ class SlideTextBlock extends StatelessWidget {
           style: GoogleFonts.lexend(
             textStyle: Theme.of(context).textTheme.headlineLarge,
             fontWeight: FontWeight.bold,
-            fontSize: 66,
+            fontSize: ResponsiveLayout.isMobile(context)
+                ? 36
+                : ResponsiveLayout.isTablet(context)
+                    ? 48
+                    : 66,
             color: Colors.white,
           ),
           // style: TextStyle(
@@ -63,7 +68,7 @@ class SlideTextBlock extends StatelessWidget {
           style: GoogleFonts.lexend(
             textStyle: Theme.of(context).textTheme.headlineLarge,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: ResponsiveLayout.isMobile(context) ? 13 : 16,
             color: Colors.white,
           ),
           // style: TextStyle(
