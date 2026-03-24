@@ -35,15 +35,11 @@ class _BgMediaState extends State<BgMedia> {
     try {
       _controller = VideoPlayerController.networkUrl(
         Uri.parse(widget.path)
-      )
-        ..initialize().then((_) {
-              // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-              setState(() {});
-        });
+      );
 
       print('Initializing');
 
-      // await _controller!.initialize();
+      await _controller!.initialize();
 
       // ✅ FIX 1: Mute BEFORE play — browsers block autoplay with sound
       await _controller!.setVolume(0.0);
@@ -61,7 +57,9 @@ class _BgMediaState extends State<BgMedia> {
       print('Play only after everything is configured');
 
       if (mounted) {
-        setState(() => _initialized = true);
+        setState(() {
+          _initialized = true;
+        });
       }
     } catch (e) {
       debugPrint('BgMedia video error: $e');

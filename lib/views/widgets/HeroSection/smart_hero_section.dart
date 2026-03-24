@@ -49,6 +49,7 @@ const List<SlideData> kSlides = [
       accentColor: Colors.white,
       isVideo: true
   ),
+
   SlideData(
     imagePath: 'https://cdn.pixabay.com/video/2020/10/19/52823-471089056_large.mp4',
       headline: 'Let’s Turn Your Ideas\nInto Real Products',
@@ -64,6 +65,7 @@ const List<SlideData> kSlides = [
     accentColor: Colors.white,
     isVideo: true
   ),
+  
   SlideData(
     imagePath: 'https://cdn.pixabay.com/video/2025/04/07/270432_large.mp4',
       headline: 'From Complex Problems\nto Scalable Products',
@@ -71,7 +73,7 @@ const List<SlideData> kSlides = [
     accentColor: Colors.white,
     isVideo: true
   ),
-// new
+
   SlideData(
       imagePath: 'https://cdn.pixabay.com/video/2016/08/22/4733-179738669_large.mp4',
       headline: 'Building Products\nThat Users Love',
@@ -236,9 +238,10 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
           children: [
             // ── Background: previous slide ──
             BgMedia(
-              key: ValueKey(kSlides[_current].imagePath),
+              key: ValueKey("prev_$_current"),
               path: kSlides[_previous].imagePath,
-              isVideo: kSlides[_previous].isVideo,),
+              isVideo: kSlides[_previous].isVideo,
+            ),
 
             // ── Background: current slide fading in ──
             FadeTransition(
@@ -246,7 +249,7 @@ class _SmartHeroSectionState extends State<SmartHeroSection>
               child: ScaleTransition(
                 scale: _scaleAnim,
                 child: BgMedia(
-                  key: ValueKey("fade_${kSlides[_current].imagePath}"),
+                  key: ValueKey("curr_$_current"),
                   path: kSlides[_current].imagePath,
                   isVideo: kSlides[_current].isVideo,
                 ),
