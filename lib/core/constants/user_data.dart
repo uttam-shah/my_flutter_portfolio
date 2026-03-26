@@ -101,18 +101,22 @@ class UserData {
       projectUrl: "https://play.google.com/store/apps/details?id=com.teches.thikedaar",
       githubUrl: null,
       screenshots: [
+
         "assets/images/computer_screen.png",
-        "assets/images/computer_screen.png" // Placeholder
+        "assets/images/bldox_1.jpg", // Placeholder
+        "assets/images/bldox_2.jpg", // Placeholder
+        "assets/images/bldox_3.jpg", // Placeholder
       ]
     ),
     WorkModel(
         title: "Smart Salon Queue & Booking System",
         subtitle: "AI-Powered Appointment & Queue Management",
         tools: ["Flutter", "Spring Boot", "PostgreSQL"],
-        description: "Developed a full-stack salon management app enabling real-time appointment booking and smart queue handling. Designed to reduce wait times using dynamic scheduling and accurate wait-time estimation.",
-        projectUrl: null,
-        githubUrl: "https://github.com/uttam-shah/smart_saloon_demo",
+        description: "Developing a full-stack Smart Salon Management System with a hybrid booking model supporting both fixed appointments and a dynamic real-time queue.\n\nBuilding an intelligent queue engine that continuously recalculates wait times based on factors such as number of users ahead, average service duration, active staff, cancellations, and appointment interruptions.\n\nImplementing real-time updates and smart notifications to inform users about wait-time changes, early availability, and arrival reminders, aiming to improve user experience and reduce idle waiting.\n\nIntegrating location-aware logic to track user proximity and suggest actions like rescheduling, skipping positions, or auto-cancellation in case of inactivity or delayed arrival.\n\nDeveloping an event-driven backend using Spring Boot and PostgreSQL to handle queue operations, booking management, and concurrent system updates.\n\nCreating a cross-platform Flutter application with clean UI/UX for seamless booking, live queue tracking, and user interaction.\n\nIncorporating AI-powered grooming and hairstyle recommendations using LLM-based prompts to provide personalized style suggestions based on user preferences.\n\nFocusing on scalability, real-time synchronization, and system reliability to support real-world salon operations.",
+        githubUrl: "https://github.com/uttam-shah/saloon_app.git",
         screenshots: [
+        "assets/images/saloon_app_1.jpg",
+        "assets/images/saloon_app_2.jpg",
           "assets/images/computer_screen.png",
         ]
     ),
@@ -121,10 +125,12 @@ class UserData {
       subtitle: "Interactive Web Resume",
       tools: ["Flutter Web", "Provider", "Responsive UI", "MVVM", "Provider", "Responsive UI", "MVVM"],
       description: "A visually stunning and interactive portfolio website built with Flutter Web. The site showcases a scrolling hero section, detailed works and projects, and a fully responsive layout.",
-      projectUrl: "https://uttam-shah.github.io/portfolio",
-      githubUrl: "https://github.com/uttam-shah/my_flutter_portfolio",
+      projectUrl: "https://uttamshah.in",
+      githubUrl: "https://github.com/uttam-shah/my_flutter_portfolio.git",
       screenshots: [
-        "assets/images/computer_screen.png",
+        "assets/images/my_portfolio_3.png",
+        "assets/images/my_portfolio_1.png",
+        "assets/images/my_portfolio_2.png",
       ]
     ),
     WorkModel(

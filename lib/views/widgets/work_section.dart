@@ -254,14 +254,13 @@ class _WorkSectionState extends State<WorkSection> {
       child: Container(
           child: Image.asset('assets/images/computer_screen.png', fit: BoxFit.cover,)),
 
-      // child: Text(
-      //   "Image Placeholder\n(Add your project image)",
-      //   textAlign: TextAlign.center,
-      //   style: GoogleFonts.inter(
-      //     color: textGray.withValues(alpha: 0.5),
-      //     fontWeight: FontWeight.w600,
-      //   ),
-      // ),
+    );
+
+    final personalProjectRightContent = Center(
+
+      child: Container(
+          child: Image.asset('assets/images/my_portfolio_3.png', fit: BoxFit.cover,)),
+
     );
 
     if (isMobile) {
@@ -299,7 +298,12 @@ class _WorkSectionState extends State<WorkSection> {
             children: [
               Expanded(flex: 2, child: leftContent),
               const SizedBox(width: 40),
-              Expanded(flex: 3, child: rightContent),
+              if(index == 2)...[
+                Expanded(flex: 3, child: personalProjectRightContent),
+               ]
+              else...[
+               Expanded(flex: 3, child: rightContent),
+    ]
             ],
           ),
         ),
