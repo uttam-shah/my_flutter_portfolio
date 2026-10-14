@@ -1,0 +1,25 @@
+
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "45BDA5F9MR.com.example.thikrdaar"
+        ],
+        "components": [
+          {
+            "/": "/employee/*",
+            "comment": "Open employee links in the app"
+          },
+          {
+            "/": "/attendance",
+            "comment": "Open attendance links in the app"
+          },
+          {
+            "/": "/*"
+          }
+        ]
+      }
+    ]
+  }
+}
